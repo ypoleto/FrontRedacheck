@@ -5,10 +5,10 @@ import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import '../css/NavBar.css';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-function NavBar() {
+function NavBar({anchorEl, setAnchorEl}) {
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleIconClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -39,10 +39,10 @@ function NavBar() {
           onClose={handleClose}
           onMouseLeave={handleClose}
         >
-          <MenuItem onClick={handleClose}> <AddOutlinedIcon style={{paddingRight: 10}} fontSize='small'/> Propor redação</MenuItem>
-          <MenuItem onClick={handleClose}> <PersonIcon style={{paddingRight: 10}} fontSize='small'/> Minha conta</MenuItem>
-          <MenuItem onClick={handleClose}> <InfoOutlinedIcon style={{paddingRight: 10}} fontSize='small'/> Sobre</MenuItem>
-          <MenuItem onClick={handleClose}> <LogoutIcon style={{paddingRight: 10}} fontSize='small'/> Sair</MenuItem>
+          <MenuItem onClick={handleClose}> <AddOutlinedIcon style={{ paddingRight: 10 }} fontSize='small' /> Propor redação</MenuItem>
+          <MenuItem onClick={handleClose}> <PersonIcon style={{ paddingRight: 10 }} fontSize='small' /> <Link to="/proposta">Minha conta</Link></MenuItem>
+          <MenuItem onClick={handleClose}> <InfoOutlinedIcon style={{ paddingRight: 10 }} fontSize='small' /> Sobre</MenuItem>
+          <MenuItem onClick={handleClose}> <LogoutIcon style={{ paddingRight: 10 }} fontSize='small' /> Sair</MenuItem>
         </Menu>
       </div>
     </div>
