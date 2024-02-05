@@ -1,6 +1,8 @@
 import { Avatar, IconButton, Menu, MenuItem } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import '../css/NavBar.css';
 import React from 'react';
 
@@ -37,7 +39,9 @@ function NavBar() {
           onClose={handleClose}
           onMouseLeave={handleClose}
         >
+          <MenuItem onClick={handleClose}> <AddOutlinedIcon style={{paddingRight: 10}} fontSize='small'/> Propor redação</MenuItem>
           <MenuItem onClick={handleClose}> <PersonIcon style={{paddingRight: 10}} fontSize='small'/> Minha conta</MenuItem>
+          <MenuItem onClick={handleClose}> <InfoOutlinedIcon style={{paddingRight: 10}} fontSize='small'/> Sobre</MenuItem>
           <MenuItem onClick={handleClose}> <LogoutIcon style={{paddingRight: 10}} fontSize='small'/> Sair</MenuItem>
         </Menu>
       </div>
