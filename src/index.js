@@ -6,7 +6,7 @@ import App from './App';
 import Home from './routes/Home';
 import NovaProposta from './routes/NovaProposta';
 import Sobre from './routes/Sobre';
-import ErrorPage from './components/ErrorPage/ErrorPage';
+import ErrorPage from './pages/ErrorPage/ErrorPage';
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
