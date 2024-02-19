@@ -1,0 +1,12 @@
+.bodyContent{
+    display:block;
+    text-align: center;
+    margin-top: 10%;
+}
+.image{
+    width: 50%;
+    height: 50%;
+}
+.errorText{
+    color: rgb(19, 39, 102);
+}

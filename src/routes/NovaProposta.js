@@ -1,10 +1,10 @@
 import React from 'react'
 import Proposta from '../components/Proposta/Proposta'
 
-const Novo = () => {
+const NovaProposta = () => {
     return (
         <Proposta />
     )
 }
 
-export default Novo
+export default NovaProposta

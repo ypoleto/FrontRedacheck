@@ -3,6 +3,7 @@ import '../../../css/Inicio.css';
 import { Grid } from '@mui/material';
 import Button from '@mui/material/Button';
 import EditIcon from '@mui/icons-material/Edit';
+import { Link } from 'react-router-dom';
 
 function ListaRedacoes() {
 
@@ -40,7 +41,7 @@ function ListaRedacoes() {
                     <div>
                         <span>Nenhuma redação pendente de correção.</span>
                     </div>
-                    <Button style={{marginTop: 15}} variant='contained'>Nova proposta</Button>
+                    <Button style={{marginTop: 15}} variant='contained'><Link to="/proposta">Nova proposta</Link></Button>
                 </div>
             )
         }

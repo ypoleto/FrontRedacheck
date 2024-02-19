@@ -2,20 +2,34 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
+import App from './App';
 import Home from './routes/Home';
-import Novo from './routes/Novo';
+import NovaProposta from './routes/NovaProposta';
+import Sobre from './routes/Sobre';
+import ErrorPage from './components/ErrorPage/ErrorPage';
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
-  },
-  {
-    path: "/novo",
-    element: <Novo />,
-  },
+    element: <App />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+      {
+        path: "/proposta",
+        element: <NovaProposta />,
+      },
+      {
+        path: "/sobre",
+        element: <Sobre />,
+      },
+    ]
+  }
 ])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

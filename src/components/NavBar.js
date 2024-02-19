@@ -6,9 +6,11 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import '../css/NavBar.css';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import HomeIcon from '@mui/icons-material/Home';
 
-function NavBar({anchorEl, setAnchorEl}) {
+function NavBar() {
 
+  const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleIconClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -21,6 +23,7 @@ function NavBar({anchorEl, setAnchorEl}) {
 
   return (
     <div className="nav">
+      <div><Link to="/"><HomeIcon color='primary' /></Link></div>
       <div>
         <IconButton
           aria-owns={anchorEl ? "simple-menu" : undefined}
@@ -33,15 +36,14 @@ function NavBar({anchorEl, setAnchorEl}) {
           <Avatar sx={{ width: 32, height: 32 }}>Y</Avatar>
         </IconButton>
         <Menu
-          id="simple-menu"
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
           onClose={handleClose}
           onMouseLeave={handleClose}
         >
-          <MenuItem onClick={handleClose}> <AddOutlinedIcon style={{ paddingRight: 10 }} fontSize='small' /> Propor redação</MenuItem>
-          <MenuItem onClick={handleClose}> <PersonIcon style={{ paddingRight: 10 }} fontSize='small' /> <Link to="/proposta">Minha conta</Link></MenuItem>
-          <MenuItem onClick={handleClose}> <InfoOutlinedIcon style={{ paddingRight: 10 }} fontSize='small' /> Sobre</MenuItem>
+          <MenuItem onClick={handleClose}> <AddOutlinedIcon style={{ paddingRight: 10 }} fontSize='small' /> <Link to="/proposta">Nova proposta</Link></MenuItem>
+          <MenuItem onClick={handleClose}> <PersonIcon style={{ paddingRight: 10 }} fontSize='small' /> <Link to="/">Minha conta</Link></MenuItem>
+          <MenuItem onClick={handleClose}> <InfoOutlinedIcon style={{ paddingRight: 10 }} fontSize='small' /> <Link to="/sobre">Sobre</Link></MenuItem>
           <MenuItem onClick={handleClose}> <LogoutIcon style={{ paddingRight: 10 }} fontSize='small' /> Sair</MenuItem>
         </Menu>
       </div>

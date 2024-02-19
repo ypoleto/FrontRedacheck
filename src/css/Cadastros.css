@@ -1,4 +1,4 @@
-.boxProposta{
+.boxCadastro{
     padding: 20px;
     width: 90%;
     margin: auto;
@@ -10,7 +10,7 @@
     background-color: white;
     box-shadow: rgba(0, 0, 0, 0.03) 0px 3px 50px;
 }
-.tituloBoxProposta {
+.tituloBoxCadastro {
     padding: 10px 20px;
     width: 90%;
     margin: auto;
