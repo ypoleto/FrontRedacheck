@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import '../../../css/Inicio.css';
-import Turma from '../../Turma/Turma';
+import '../../../../css/Inicio.css';
+import Turma from '../Turmas/FormTurma';
 import { Grid } from '@mui/material';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';

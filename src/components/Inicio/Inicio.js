@@ -1,6 +1,6 @@
 import '../../css/Inicio.css';
-import ListaTurmas from './components/ListaTurmas';
-import ListaRedacoes from './components/ListaRedacoes';
+import ListaTurmas from './components/Turmas/ListaTurmas';
+import ListaRedacoes from './components/Redacoes/ListaRedacoes';
 
 function Inicio() {
   return (

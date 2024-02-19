@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import '../../../css/Inicio.css';
+import '../../../../css/Inicio.css';
 import { Grid } from '@mui/material';
 import Button from '@mui/material/Button';
 import EditIcon from '@mui/icons-material/Edit';

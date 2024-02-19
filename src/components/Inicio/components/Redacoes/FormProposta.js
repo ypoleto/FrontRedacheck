@@ -1,5 +1,5 @@
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
-import '../../css/Cadastros.css';
+import '../../../../css/Cadastros.css';
 import { useState } from 'react';
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'

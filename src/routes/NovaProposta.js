@@ -1,5 +1,5 @@
 import React from 'react'
-import Proposta from '../components/Proposta/Proposta'
+import Proposta from '../components/Inicio/components/Redacoes/FormProposta'
 
 const NovaProposta = () => {
     return (
