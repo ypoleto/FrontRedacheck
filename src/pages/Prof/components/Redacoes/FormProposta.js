@@ -5,7 +5,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { Link } from 'react-router-dom';
-import TitleBoxes from '../TitleBoxes';
+import TitleBoxes from '../../../../components/TitleBoxes';
 import dayjs from 'dayjs';
 
 function Proposta() {

@@ -7,6 +7,7 @@ import '../css/NavBar.css';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
+import { usuario } from '../user'
 
 function NavBar() {
 
@@ -37,7 +38,7 @@ function NavBar() {
           size="small"
           sx={{ ml: 2 }}
         >
-          <Avatar sx={{ width: 32, height: 32 }}>Y</Avatar>
+          <Avatar sx={{ width: 32, height: 32 }}>{usuario.nome[0]}</Avatar>
         </IconButton>
         <Menu
           anchorEl={anchorEl}

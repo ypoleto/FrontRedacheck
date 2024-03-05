@@ -1,9 +1,13 @@
-.principal {
+.principalProf {
     padding: 12px;
     display: grid;
     grid-auto-flow: column;
     grid-template-columns: 2;
     grid-auto-columns: minmax(0, 1fr);
+}
+
+.principalAluno {
+    padding: 0px;
 }
 
 .container {
@@ -60,7 +64,38 @@
     backdrop-filter: blur(3px);
 }
 
-.infosBoxRedacao {
+.infosBoxRedacaoProf {
     display: grid;
     gap: 10px;
+}
+
+.boxRedacaoProf {
+    border-radius: 4px;
+    margin: auto;
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.boxRedacaoAluno {
+    display: flex;
+    gap: 50px;
+    padding: 15px;
+    justify-content: space-between;
+    border-radius: 4px;
+    margin: auto;
+    width: 95%;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.infosBoxRedacaoAluno {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: left;
+}
+
+.boxCadastro{
+    min-height: 50vh;
+    height: auto ;
+    background-color: white;
 }

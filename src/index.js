@@ -5,10 +5,11 @@ import reportWebVitals from './reportWebVitals';
 import App from './App';
 import Home from './routes/Home';
 import NovaProposta from './routes/NovaProposta';
+import NovaRedacao from './routes/NovaRedacao';
 import Sobre from './routes/Sobre';
 import ErrorPage from './pages/ErrorPage/ErrorPage';
-
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
       {
         path: "/sobre",
         element: <Sobre />,
+      },
+      {
+        path: "/novaredacao",
+        element: <NovaRedacao />,
       },
     ]
   }

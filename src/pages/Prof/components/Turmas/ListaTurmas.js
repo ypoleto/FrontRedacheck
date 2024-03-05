@@ -1,12 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import '../../../../css/Inicio.css';
 import Turma from './FormTurma';
-import { Button, Divider, Grid, IconButton, Tooltip } from '@mui/material';
+import { Button, Divider } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import TitleBoxes from '../TitleBoxes';
-import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline';
+import TitleBoxes from '../../../../components/TitleBoxes';
 
 function ListaTurmas() {
 

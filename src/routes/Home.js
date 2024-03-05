@@ -1,9 +1,16 @@
 import React from 'react'
-import Inicio from '../pages/Inicio/Inicio'
+import InicioProf from '../pages/Prof/InicioProf'
+import InicioAluno from '../pages/Aluno/InicioAluno'
+import { usuario } from '../user'
 
 const Home = () => {
+    if (usuario.perfil == 'aluno') {
+        return (
+            <InicioAluno/>
+        )
+    }
     return (
-        <Inicio />
+        <InicioProf />
     )
 }
 
