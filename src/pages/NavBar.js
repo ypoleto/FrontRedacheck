@@ -23,7 +23,11 @@ function NavBar() {
 
   return (
     <div className="nav">
-      <div><Link to="/"><HomeIcon color='primary' /></Link></div>
+      <div style={{ display: 'grid', gridAutoFlow: 'column', gap: 50, alignItems: 'center' }}>
+        <Link to="/"><img className='imgLogo' src={require('../images/logo.png')}></img></Link>
+        <Link to="/">Início</Link>
+        <Link to="/sobre">Sobre</Link>
+      </div>
       <div>
         <IconButton
           aria-owns={anchorEl ? "simple-menu" : undefined}
@@ -41,9 +45,7 @@ function NavBar() {
           onClose={handleClose}
           onMouseLeave={handleClose}
         >
-          <MenuItem onClick={handleClose}> <AddOutlinedIcon style={{ paddingRight: 10 }} fontSize='small' /> <Link to="/proposta">Nova proposta</Link></MenuItem>
           <MenuItem onClick={handleClose}> <PersonIcon style={{ paddingRight: 10 }} fontSize='small' /> <Link to="/">Minha conta</Link></MenuItem>
-          <MenuItem onClick={handleClose}> <InfoOutlinedIcon style={{ paddingRight: 10 }} fontSize='small' /> <Link to="/sobre">Sobre</Link></MenuItem>
           <MenuItem onClick={handleClose}> <LogoutIcon style={{ paddingRight: 10 }} fontSize='small' /> Sair</MenuItem>
         </Menu>
       </div>

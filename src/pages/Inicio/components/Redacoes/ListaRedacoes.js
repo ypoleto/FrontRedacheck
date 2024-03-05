@@ -1,47 +1,21 @@
 import { useState } from 'react';
 import '../../../../css/Inicio.css';
-import { Grid } from '@mui/material';
+import { Grid, Tooltip } from '@mui/material';
 import Button from '@mui/material/Button';
 import EditIcon from '@mui/icons-material/Edit';
 import { Link } from 'react-router-dom';
+import AddIcon from '@mui/icons-material/Add';
+import TitleBoxes from '../TitleBoxes';
 
 function ListaRedacoes() {
 
-    // const [redacoes, setRedacoes] = useState([{
-    //     id: 1,
-    //     titulo: 'Redação de teste1',
-    //     aluno: { nome: 'Aluno 1', turma: '3A ens medio' },
-    //     descricao: 'Descrição de teste1',
-    // },
-    // {
-    //     id: 2,
-    //     titulo: 'Redação de teste2',
-    //     aluno: { nome: 'Aluno 2', turma: '3A ens medio' },
-    //     descricao: 'Descrição de teste2',
-    // },
-    // {
-    //     id: 3,
-    //     titulo: 'Redação de teste3',
-    //     aluno: { nome: 'Aluno 3', turma: '3A ens medio' },
-    //     descricao: 'Descrição de teste3',
-    // },
-    // {
-    //     id: 4,
-    //     titulo: 'Redação de teste4',
-    //     aluno: { nome: 'Aluno 4', turma: '3A ens medio' },
-    //     descricao: 'Descrição de teste4',
-    // }
-    // ]);
     const [redacoes, setRedacoes] = useState([]);
 
     const getRedacoesPendentes = () => {
         if (redacoes.length == 0) {
             return (
-                <div style={{ color: "#9b9b9b", fontSize: '14px' }}>
-                    <div>
-                        <span>Nenhuma redação pendente de correção.</span>
-                    </div>
-                    <Button style={{marginTop: 15}} variant='contained'><Link to="/proposta">Nova proposta</Link></Button>
+                <div style={{ color: "#9b9b9b", fontSize: '14px', margin: 20 }}>
+                    <span>Nenhuma redação pendente de correção.</span>
                 </div>
             )
         }
@@ -69,9 +43,9 @@ function ListaRedacoes() {
 
     return (
         <div className="container">
-            <div>
-                <div className='tituloBoxLista'>Redações Pendentes</div>
-                <div className="boxLista">
+            <div className='list'>
+                <TitleBoxes add={true} title="Redações Pendentes" tooltip="Nova proposta" link="/proposta" />
+                <div className="boxList">
                     {getRedacoesPendentes()}
                 </div>
             </div>

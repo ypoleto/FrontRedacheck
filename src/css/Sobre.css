@@ -1,0 +1,43 @@
+.cabecalho {
+    position: relative;
+}
+
+.imagem {
+    width: 100%;
+    height: 300px;
+    border-radius: 10px;
+    background-image: url("../images/estudante.jpg");
+    background-size: cover;
+    background-position: bottom center;
+}
+
+.texto {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+}
+
+.sobreposicao {
+    position: absolute;
+    border-radius: 10px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.corpoSobre{
+    display: grid;
+    margin: 50px auto;
+    width: 50%;
+    padding: 20px 50px;
+    text-align: center;
+    color: rgb(99, 99, 99);
+    font-size: 15px;
+    line-height: 24px;
+    gap: 50px;
+}

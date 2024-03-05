@@ -1,15 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
-
-* {
-  font-family: 'Raleway', sans-serif;
-
-}
-
-body {
-  background-color: rgb(241, 241, 241);
-
-}
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
 
 .App {
   text-align: center;
+  margin: 0px 20px;
 }

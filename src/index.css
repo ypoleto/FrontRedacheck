@@ -1,15 +1,28 @@
+* {
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+html {
+  height: 100%
+}
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: linear-gradient(to bottom right, #F4EBEC, #ecebf4);
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.MuiButton-root{
+  font-family: "Plus Jakarta Sans", sans-serif !important;
 }
 
+.css-bdhsul-MuiTypography-root-MuiDialogTitle-root{
+  padding: 0px !important;
+}
 
+.MuiDialog-container .MuiPaper-root{
+  border-radius: 10px;
+}
+.MuiBackdrop-root{
+  backdrop-filter: blur(5px);
+}

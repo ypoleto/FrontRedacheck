@@ -4,7 +4,7 @@ import ListaRedacoes from './components/Redacoes/ListaRedacoes';
 
 function Inicio() {
   return (
-    <div className="container">
+    <div className="principal">
       <div>
         <ListaTurmas />
       </div>

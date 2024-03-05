@@ -6,14 +6,9 @@ import axios from 'axios';
 function Turma(props) {
 
     const [loading, setLoading] = useState(false);
-    const [turma, setTurma] = useState({
-        nome: '',
-        colegio: null,
-    });
-
     const [colegios, setColegios] = useState([]);
 
-    const getEscolas = () => {
+    const getColegios = () => {
         var params = {
             cidade: 4104303,
         }
@@ -21,6 +16,7 @@ function Turma(props) {
         axios.get('http://educacao.dadosabertosbr.org/api/escolas/buscaavancada', { params })
             .then((response) => {
                 setColegios(response.data[1])
+                localStorage.setItem("colegios", JSON.stringify(response.data[1]));
             }).catch((error) => {
                 console.log(error);
             })
@@ -32,19 +28,28 @@ function Turma(props) {
 
     const handleSubmit = e => {
         e.preventDefault()
-        props.setTurmas(turmas => [...turmas, turma])
+        if (props.method === "POST") {
+            props.setTurmas(turmas => [...turmas, props.turma])
+        } else if (props.method === "PUT") {
+            console.log('novoEstado', props.turma);
+            console.log(props.turmas.indexOf(element => element.id === props.turma.id));
+            // this.setState({ props.turmas[1] : props.turma })
+        }
         props.setDialogNovaTurma(false)
     };
 
     useEffect(() => {
-        if (getEscolas.length === 0) {
-            getEscolas();
+        if (localStorage.getItem("colegios")) {
+            setColegios(JSON.parse(localStorage.getItem("colegios")))
+        }
+        else {
+            getColegios();
         }
     }, [])
 
-    useEffect(() => {
-        console.log('props.turmas', props.turmas);
-    }, [props.turmas])
+    // useEffect(() => {
+    //     console.log(props.turma);
+    // }, [props.turma])
 
     return (
         <div className="container">
@@ -61,8 +66,9 @@ function Turma(props) {
                         fullWidth
                         margin="normal"
                         name="titulo"
-                        onChange={(e) => setTurma({
-                            ...turma,
+                        value={props.turma.nome}
+                        onChange={(e) => props.setTurma({
+                            ...props.turma,
                             nome: e.target.value // But override this one
                         })}
                         required
@@ -74,23 +80,24 @@ function Turma(props) {
                             required
                             labelId="label-select"
                             label="Colégio"
-                            onChange={(e) => setTurma({
-                                ...turma,
+                            value={props.turma.colegio}
+                            onChange={(e) => props.setTurma({
+                                ...props.turma,
                                 colegio: e.target.value // But override this one
                             })}
                         >
-                            {colegios.map((opcao) => (
+                            {colegios && colegios.map((opcao) => (
                                 <MenuItem key={opcao.cod} value={opcao.nome}>
                                     {opcao.nome}
                                 </MenuItem>
                             ))}
                         </Select>
                     </FormControl>
-                    <div style={{ display: 'flex', gap: 10, justifyContent: 'center', marginTop: 30 }}>
-                        <Button type="submit" variant="contained" color="primary">
-                            Cadastrar Turma
+                    <div style={{ display: 'flex', gap: 15, justifyContent: 'center', marginTop: '55px'}}>
+                        <Button fullWidth type="submit" variant="contained" color="primary">
+                            Salvar
                         </Button>
-                        <Button onClick={() => props.setDialogNovaTurma(false)} variant="contained" color="error">
+                        <Button fullWidth onClick={() => props.setDialogNovaTurma(false)} variant="contained" color="error">
                             Cancelar
                         </Button>
                     </div>
