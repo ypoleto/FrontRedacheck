@@ -128,10 +128,10 @@ function Proposta() {
                             </Select>
                         </FormControl>
                         <div style={{ display: 'flex', gap: 10, justifyContent: 'center', marginTop: 30 }}>
-                            <Button type="submit" variant="outlined" color="primary">
+                            <Button type="submit" variant="contained" color="primary">
                                 Cadastrar Proposta
                             </Button>
-                            <Button type="submit" variant="outlined" color="error">
+                            <Button type="submit" variant="contained" color="error">
                                 <Link to="/">
                                     Cancelar
                                 </Link>
