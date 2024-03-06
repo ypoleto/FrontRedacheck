@@ -52,7 +52,7 @@ function ListaRedacoes() {
     return (
         <div className="container">
             <div className='list'>
-                <TitleBoxes add={true} title="Redações Pendentes" tooltip="Nova proposta" link="/proposta" />
+                <TitleBoxes title="Redações Pendentes" tooltip="Nova proposta" />
                 <div className="boxList">
                     {getRedacoesPendentes()}
                 </div>

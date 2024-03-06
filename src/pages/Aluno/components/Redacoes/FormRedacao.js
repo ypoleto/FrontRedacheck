@@ -1,34 +1,24 @@
-import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
+import { Backdrop, Button, CircularProgress, TextField } from '@mui/material';
 import '../../../../css/Cadastros.css';
 import { useEffect, useState } from 'react';
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import TitleBoxes from '../../../../components/TitleBoxes';
-import dayjs from 'dayjs';
 import WarningIcon from '@mui/icons-material/Warning';
+import axios from 'axios';
 
 function Redacao() {
 
     const [numPalavras, setNumPalavras] = useState(0);
     const [inputValue, setInputValue] = useState('');
+    let [searchParams, setSearchParams] = useSearchParams();
+    const [redacao, setRedacao] = useState({});
+    const query = useLocation().search
 
     const checkPalavras = () => {
         return inputValue.trim().split(/\s+/).length >= redacao.max
     }
-
-    const [redacao, setRedacao] = useState({});
-
-    const query = useLocation().search
-
-    const [generos, setGeneros] = useState([
-        { id: 1, value: 'Argumentativo' },
-        { id: 2, value: 'Descritivo' },
-        { id: 3, value: 'Expositivo' },
-        { id: 4, value: 'Injuntivo' },
-        { id: 5, value: 'Narrativo' }
-    ]);
 
     const handleChangeRedacao = (e) => {
         const words = e.target.value.trim().split(/\s+/); // Quebra o texto em palavras
@@ -39,7 +29,6 @@ function Redacao() {
     };
 
     const handleChange = (e) => {
-
         setRedacao({
             ...redacao,
             [e.target.name]: e.target.value,
@@ -51,18 +40,18 @@ function Redacao() {
         var params = JSON.parse('{"' + query.substring(1).replace(/&/g, '","').replace(/=/g, '":"') + '"}', function (key, value) { return key === "" ? value : decodeURIComponent(value) })
         var redacaoFinal = Object.assign(params, redacao)
         console.log('Redacao', redacaoFinal);
-        
+
     };
 
+    const fetchProposta = (id) => {
+        axios.get('/propostas/', { params: { id: id } })
+            .then(response => {
+                setRedacao(response.data[0])
+            });
+    }
+
     useEffect(() => {
-        // var newObj = Object.assign({}, props.redacao)
-        setRedacao({
-            id: 1,
-            tema: 'POLÍTICAS PÚBLICAS E ACORDOS INTERNACIONAIS: O PAPEL DO MUNDO NO COMBATE ÀS MUDANÇAS CLIMÁTICAS',
-            genero: 'Dissertativo Argumentativo',
-            min: 100,
-            max: 3,
-        });
+        fetchProposta(searchParams.get('proposta'));
     }, [])
 
 
@@ -71,6 +60,7 @@ function Redacao() {
             <div className='boxCadastro'>
                 <TitleBoxes title="Nova redação" add={false} back={true} />
                 <div style={{ padding: 20 }}>
+                    <span style={{ display: 'flex', textAlign: 'start', marginBottom: 30 }}>{redacao.tema}</span>
                     <form onSubmit={handleSubmit}>
                         <TextField
                             label="Título"

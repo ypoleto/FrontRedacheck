@@ -1,31 +1,32 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import '../../../../css/Inicio.css';
 import { Grid } from '@mui/material';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import TitleBoxes from '../../../../components/TitleBoxes';
-import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 function ListaRedacoes() {
 
-    const [propostas, setPropostas] = useState([
-        {
-            id: 1,
-            tema: 'POLÍTICAS PÚBLICAS E ACORDOS INTERNACIONAIS: O PAPEL DO MUNDO NO COMBATE ÀS MUDANÇAS CLIMÁTICAS',
-            genero: 'Dissertativo Argumentativo',
-            min: 100,
-            max: 1000,
+    const [propostas, setPropostas] = useState([]);
+    let navigate = useNavigate();
 
-        },
-        {
-            id: 2,
-            tema: 'CAMINHOS PARA VALORIZAR OS PROFISSIONAIS FORMADOS EM CURSOS TÉCNICOS',
-            genero: 'Dissertativo Argumentativo',
-            min: 100,
-            max: 1000,
 
-        }
-    ]);
+    const newRedacao = (proposta) => {
+        console.log(proposta);
+        navigate({
+            pathname: '/novaredacao',
+            search: `?proposta=${proposta._id}`
+        })
+    }
+
+    const fetchPropostas = async () => {
+        axios.get('/propostas', {})
+            .then(response => {
+                setPropostas(response.data)
+            })
+    }
 
     const getPropostas = () => {
         if (propostas.length == 0) {
@@ -52,12 +53,10 @@ function ListaRedacoes() {
                                 </div>
                             </div>
                             <div style={{ alignSelf: 'center' }}>
-                                <Link to={`/novaredacao?proposta=${proposta.id}`}>
-                                    <Button size='small' color='success' variant="contained" >
-                                        <AddIcon fontSize='small' />
-                                        <span style={{ paddingLeft: 5 }}>Começar</span>
-                                    </Button>
-                                </Link>
+                                <Button onClick={() => newRedacao(proposta)} size='small' color='success' variant="contained" >
+                                    <AddIcon fontSize='small' />
+                                    <span style={{ paddingLeft: 5 }}>Começar</span>
+                                </Button>
                             </div>
                         </div>
                     </Grid>
@@ -65,6 +64,11 @@ function ListaRedacoes() {
             </Grid>
         )
     }
+
+    useEffect(() => {
+        fetchPropostas();
+    }, [])
+
 
     return (
         <div className="container">

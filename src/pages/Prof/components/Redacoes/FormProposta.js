@@ -1,17 +1,18 @@
-import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
+import { Backdrop, Button, CircularProgress, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import '../../../../css/Cadastros.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { Link } from 'react-router-dom';
 import TitleBoxes from '../../../../components/TitleBoxes';
 import dayjs from 'dayjs';
+import axios from 'axios';
 
 function Proposta() {
 
     const [proposta, setProposta] = useState({
-        titulo: '',
+        tema: '',
         genero: '',
         min: '',
         max: '',
@@ -19,27 +20,40 @@ function Proposta() {
         entrega: '',
         dificuldade: '',
     });
-
-    const [generos, setGeneros] = useState([
-        { id: 1, value: 'Argumentativo' },
-        { id: 2, value: 'Descritivo' },
-        { id: 3, value: 'Expositivo' },
-        { id: 4, value: 'Injuntivo' },
-        { id: 5, value: 'Narrativo' }
-    ]);
+    const [loading, setLoading] = useState(false);
+    const [generos, setGeneros] = useState([]);
 
     const handleChange = (e) => {
         setProposta({
             ...proposta,
             [e.target.name]: e.target.value,
         });
-        console.log(proposta);
     };
+
+    const fetchGeneros = () => {
+        setLoading(true);
+        axios.get('/generos')
+            .then(response => {
+                setGeneros(response.data)
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Aqui você pode enviar a proposta para o backend ou realizar outras operações
-        console.log('Proposta enviada:', proposta);
+        setLoading(true);
+        axios.post('/propostas', proposta)
+            .then(() => {
+                alert('Adicionado!');
+            })
+            .catch(err => {
+                console.error(err);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
     };
 
     const formatDateValue = (value, name) => {
@@ -47,12 +61,19 @@ function Proposta() {
             name: name,
             value: dayjs(value).format('YYYY-MM-DD'),
         };
-        console.log(target);
         handleChange({ target });
     };
 
+    useEffect(() => {
+        fetchGeneros();
+    }, [])
+
+
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <Backdrop open={loading} sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+                <CircularProgress color="inherit" />
+            </Backdrop>
             <div className='boxList'>
                 <TitleBoxes title="Nova proposta de redação" add={false} />
                 <div className="boxCadastro" style={{ margin: '0px 48px' }}>
@@ -61,9 +82,9 @@ function Proposta() {
                             label="Título da proposta"
                             fullWidth
                             margin="normal"
-                            name="titulo"
+                            name="tema"
                             required
-                            value={proposta.titulo}
+                            value={proposta.tema}
                             onChange={handleChange}
                         />
                         <FormControl fullWidth>
@@ -77,7 +98,7 @@ function Proposta() {
                                 onChange={handleChange}
                             >
                                 {generos && generos.map((opcao) => (
-                                    <MenuItem key={opcao.id} value={opcao.value}>
+                                    <MenuItem key={opcao._id} value={opcao.value}>
                                         {opcao.value}
                                     </MenuItem>
                                 ))}

@@ -10,13 +10,13 @@ const TitleBoxes = (props) => {
                 {props.title}
             </span>
             {props.add ? (
-                <Button variant='info' onClick={props.func}>
-                    <Link to={props.link}>
+                <Link to={props.link}>
+                    <Button variant='contained' onClick={props.func}>
                         <Tooltip title={props.tooltip}>
                             <AddIcon />
                         </Tooltip>
-                    </Link>
-                </Button>
+                    </Button>
+                </Link>
             ) :
                 <></>
             }

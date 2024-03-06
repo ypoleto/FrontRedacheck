@@ -31,9 +31,7 @@ function Turma(props) {
         if (props.method === "POST") {
             props.setTurmas(turmas => [...turmas, props.turma])
         } else if (props.method === "PUT") {
-            console.log('novoEstado', props.turma);
             console.log(props.turmas.indexOf(element => element.id === props.turma.id));
-            // this.setState({ props.turmas[1] : props.turma })
         }
         props.setDialogNovaTurma(false)
     };
@@ -46,10 +44,6 @@ function Turma(props) {
             getColegios();
         }
     }, [])
-
-    // useEffect(() => {
-    //     console.log(props.turma);
-    // }, [props.turma])
 
     return (
         <div className="container">

@@ -28,6 +28,7 @@ function NavBar() {
         <Link to="/"><img className='imgLogo' src={require('../images/logo.png')}></img></Link>
         <Link to="/">Início</Link>
         <Link to="/sobre">Sobre</Link>
+        <Link to="/novaproposta">Nova proposta</Link>
       </div>
       <div>
         <IconButton
