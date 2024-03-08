@@ -3,7 +3,7 @@ import '../../../../css/Cadastros.css';
 import { useEffect, useState } from 'react';
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { Link } from 'react-router-dom';
 import TitleBoxes from '../../../../components/TitleBoxes';
 import dayjs from 'dayjs';
@@ -126,11 +126,11 @@ function Proposta() {
                             />
                         </div>
                         <div style={{ display: 'flex', gap: '15px', marginBottom: 10 }}>
-                            <DatePicker onChange={value => formatDateValue(value, "aplicacao")}
+                            <DateTimePicker onChange={value => formatDateValue(value, "aplicacao")}
                                 slotProps={{ textField: { fullWidth: true } }}
                                 label="Data de aplicação"
                             />
-                            <DatePicker onChange={value => formatDateValue(value, "entrega")}
+                            <DateTimePicker onChange={value => formatDateValue(value, "entrega")}
                                 slotProps={{ textField: { fullWidth: true } }}
                                 label="Data para entrega"
                             />

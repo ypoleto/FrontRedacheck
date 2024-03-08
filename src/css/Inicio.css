@@ -65,15 +65,20 @@
 }
 
 .infosBoxRedacaoProf {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     gap: 10px;
+    font-size: small;
+    text-align: start;
 }
 
 .boxRedacaoProf {
-    border-radius: 4px;
-    margin: auto;
-    width: 100%;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+    padding: 10px;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    align-items: center;
 }
 
 .boxRedacaoAluno {
@@ -94,8 +99,8 @@
     text-align: left;
 }
 
-.boxCadastro{
+.boxCadastro {
     min-height: 50vh;
-    height: auto ;
+    height: auto;
     background-color: white;
 }

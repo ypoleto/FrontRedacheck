@@ -1,11 +1,11 @@
 import '../../css/Inicio.css';
-import ListaRedacoes from './components/Redacoes/ListaRedacoes';
+import ListaPropostas from './components/Redacoes/ListaPropostas';
 
 function Inicio() {
   return (
     <div className="principalAluno">
       <div>
-        <ListaRedacoes />
+        <ListaPropostas />
       </div>
     </div>
   );

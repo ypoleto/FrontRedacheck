@@ -13,7 +13,18 @@ function ListaRedacoes() {
             titulo: 'Adoção de maiores de idade',
             genero: 'Argumentativo',
             aluno: {
-                nome: "askdjalsk"
+                nome: "askdjalsk",
+                turma: "1º ano"
+            }
+
+        },
+        {
+            id: 1,
+            titulo: 'Adoção de maiores de idade',
+            genero: 'Argumentativo',
+            aluno: {
+                nome: "askdjalsk",
+                turma: "1º ano"
             }
 
         }
@@ -28,16 +39,16 @@ function ListaRedacoes() {
             )
         }
         return (
-            <Grid container spacing={{ xs: 2, md: 3 }} columns={4}>
+            <Grid justifyContent="center" container spacing={{ xs: 2, md: 3 }} columns={1}>
                 {redacoes.map((redacao, index) => (
-                    <Grid item xs={2} sm={4} md={4} key={index}>
+                    <Grid item xs={8} sm={4} md={4} lg={2} key={index}>
                         <div className='boxRedacaoProf'>
                             <div className='infosBoxRedacaoProf'>
-                                <div style={{ fontSize: 20 }}> {redacao.titulo}</div>
+                                <div style={{ fontSize: 18 }}> {redacao.titulo}</div>
                                 <div style={{ fontSize: 14 }}>{redacao.aluno.nome} | {redacao.aluno.turma}</div>
                             </div>
-                            <div>
-                                <Button variant="contained">
+                            <div style={{ display: 'flex', justifyContent: 'end' }}>
+                                <Button variant="contained" size='small'>
                                     <EditIcon fontSize='small' />
                                     <span style={{ paddingLeft: 5 }}>Corrigir</span>
                                 </Button>
