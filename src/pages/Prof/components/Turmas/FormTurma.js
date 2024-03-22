@@ -1,53 +1,57 @@
 import { Backdrop, Button, CircularProgress, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import { React, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { usuario } from '../../../../user'
 
 function Turma(props) {
 
     const [loading, setLoading] = useState(false);
     const [colegios, setColegios] = useState([]);
-
-    const getColegios = () => {
-        var params = {
-            cidade: 4104303,
-        }
-        setLoading(true)
-        axios.get('http://educacao.dadosabertosbr.org/api/escolas/buscaavancada', { params })
-            .then((response) => {
-                setColegios(response.data[1])
-                localStorage.setItem("colegios", JSON.stringify(response.data[1]));
-            }).catch((error) => {
-                console.log(error);
-            })
-            .finally(() =>
-                setLoading(false)
-            );
-
-    };
+    const [estados, setEstados] = useState([]);
 
     const handleSubmit = e => {
         e.preventDefault()
         if (props.method === "POST") {
-            props.setTurmas(turmas => [...turmas, props.turma])
+            setLoading(true);
+            axios.post('/turmas', props.turma)
+                .then(() => {
+                    alert('Adicionado!');
+                })
+                .catch(err => {
+                    console.error(err);
+                })
+                .finally(() => {
+                    setLoading(false);
+                });
         } else if (props.method === "PUT") {
-            console.log(props.turmas.indexOf(element => element.id === props.turma.id));
+            setLoading(true)
         }
         props.setDialogNovaTurma(false)
     };
 
-    useEffect(() => {
-        if (localStorage.getItem("colegios")) {
-            setColegios(JSON.parse(localStorage.getItem("colegios")))
-        }
-        else {
-            getColegios();
-        }
-    }, [])
+    // useEffect(() => {
+    //     if (props.method === "PUT") {
+    //         setLoading(true)
+    //         console.log('oi', props.turma);
+    //         axios.get(`/turmas/${props.turma.id}`)
+    //             .then((response) => {
+    //                 var newObj = Object.assign(props.turma, response.data);
+    //                 newObj.colegio = parseInt(newObj.colegio);
+    //                 newObj.cidade = parseInt(newObj.cidade);
+    //                 props.setTurma(newObj)
+    //             }).catch((error) => {
+    //                 console.log(error);
+    //             })
+    //             .finally(() =>
+    //                 setLoading(false)
+    //             );
+    //     }
+    // }, [props.method])
+
 
     return (
         <div className="container">
-            <div className="boxCadastro">
+            <div className="boxCadastroTurma">
                 <Backdrop
                     sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
                     open={loading}
@@ -61,10 +65,12 @@ function Turma(props) {
                         margin="normal"
                         name="titulo"
                         value={props.turma.nome}
-                        onChange={(e) => props.setTurma({
-                            ...props.turma,
-                            nome: e.target.value // But override this one
-                        })}
+                        onChange={(e) => {
+                            props.setTurma({
+                                ...props.turma,
+                                nome: e.target.value
+                            })
+                        }}
                         required
                     />
                     <FormControl fullWidth>
@@ -75,30 +81,32 @@ function Turma(props) {
                             labelId="label-select"
                             label="Colégio"
                             value={props.turma.colegio}
-                            onChange={(e) => props.setTurma({
-                                ...props.turma,
-                                colegio: e.target.value // But override this one
-                            })}
+                            onChange={(e) => {
+                                props.setTurma({
+                                    ...props.turma,
+                                    colegio: e.target.value
+                                })
+                            }}
                         >
                             {colegios && colegios.map((opcao) => (
-                                <MenuItem key={opcao.cod} value={opcao.nome}>
+                                <MenuItem key={opcao.cod} value={opcao.cod}>
                                     {opcao.nome}
                                 </MenuItem>
                             ))}
                         </Select>
                     </FormControl>
-                    <div style={{ display: 'flex', gap: 15, justifyContent: 'center', marginTop: '55px'}}>
+                    <div style={{ display: 'flex', gap: 15, justifyContent: 'center', marginTop: '55px' }}>
                         <Button fullWidth type="submit" variant="contained" color="primary">
                             Salvar
                         </Button>
-                        <Button fullWidth onClick={() => props.setDialogNovaTurma(false)} variant="contained" color="error">
+                        <Button fullWidth onClick={() => { props.setDialogNovaTurma(false); props.setTurma({}) }} variant="contained" color="error">
                             Cancelar
                         </Button>
                     </div>
                 </form>
 
-            </div>
-        </div>
+            </div >
+        </div >
     );
 }
 

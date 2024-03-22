@@ -16,7 +16,6 @@ function ListaRedacoes() {
 
 
     const newRedacao = (proposta) => {
-        console.log(proposta);
         navigate({
             pathname: '/novaredacao',
             search: `?proposta=${proposta._id}`

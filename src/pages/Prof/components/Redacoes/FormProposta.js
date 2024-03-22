@@ -78,76 +78,97 @@ function Proposta() {
                 <TitleBoxes title="Nova proposta de redação" add={false} />
                 <div className="boxCadastro" style={{ margin: '0px 48px' }}>
                     <form onSubmit={handleSubmit}>
-                        <TextField
-                            label="Título da proposta"
-                            fullWidth
-                            margin="normal"
-                            name="tema"
-                            required
-                            value={proposta.tema}
-                            onChange={handleChange}
-                        />
-                        <FormControl fullWidth>
-                            <InputLabel id="label-select">Gênero Textual</InputLabel>
-                            <Select
+                        <div className='formPropostaDivs'>
+                            <FormControl fullWidth>
+                                <InputLabel id="label-select">Turma</InputLabel>
+                                <Select
+                                    required
+                                    labelId="label-select"
+                                    label="Turma"
+                                    name='genero'
+                                    onChange={handleChange}
+                                >
+                                    {generos && generos.map((opcao) => (
+                                        <MenuItem key={opcao._id} value={opcao.value}>
+                                            {opcao.value}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                            <TextField
+                                label="Título da proposta"
                                 fullWidth
+                                margin="normal"
+                                name="tema"
                                 required
-                                labelId="label-select"
-                                label="Gênero textual"
-                                name='genero'
-                                onChange={handleChange}
-                            >
-                                {generos && generos.map((opcao) => (
-                                    <MenuItem key={opcao._id} value={opcao.value}>
-                                        {opcao.value}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-
-                        <div style={{ display: 'flex', gap: '16px', marginTop: 10 }}>
-                            <TextField
-                                label="Mínimo de palavras"
-                                fullWidth
-                                type='number'
-                                margin="normal"
-                                name="min"
-                                value={proposta.texto}
-                                onChange={handleChange}
-                            />
-                            <TextField
-                                label="Máximo de palavras"
-                                fullWidth
-                                type='number'
-                                margin="normal"
-                                name="max"
-                                value={proposta.texto}
+                                value={proposta.tema}
                                 onChange={handleChange}
                             />
                         </div>
-                        <div style={{ display: 'flex', gap: '15px', marginBottom: 10 }}>
-                            <DateTimePicker onChange={value => formatDateValue(value, "aplicacao")}
-                                slotProps={{ textField: { fullWidth: true } }}
-                                label="Data de aplicação"
-                            />
-                            <DateTimePicker onChange={value => formatDateValue(value, "entrega")}
-                                slotProps={{ textField: { fullWidth: true } }}
-                                label="Data para entrega"
-                            />
+                        <div className='formPropostaDivs'>
+                            <FormControl fullWidth>
+                                <InputLabel id="label-select">Gênero Textual</InputLabel>
+                                <Select
+                                    fullWidth
+                                    required
+                                    labelId="label-select"
+                                    label="Gênero textual"
+                                    name='genero'
+                                    onChange={handleChange}
+                                >
+                                    {generos && generos.map((opcao) => (
+                                        <MenuItem key={opcao._id} value={opcao.value}>
+                                            {opcao.value}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                            <FormControl fullWidth>
+                                <InputLabel>Dificuldade</InputLabel>
+                                <Select
+                                    label="Dificuldade"
+                                    name="dificuldade"
+                                    value={proposta.dificuldade}
+                                    onChange={handleChange}
+                                >
+                                    <MenuItem value="facil">Fácil</MenuItem>
+                                    <MenuItem value="medio">Médio</MenuItem>
+                                    <MenuItem value="dificil">Difícil</MenuItem>
+                                </Select>
+                            </FormControl>
                         </div>
-                        <FormControl fullWidth margin="normal">
-                            <InputLabel>Dificuldade</InputLabel>
-                            <Select
-                                label="Dificuldade"
-                                name="dificuldade"
-                                value={proposta.dificuldade}
-                                onChange={handleChange}
-                            >
-                                <MenuItem value="facil">Fácil</MenuItem>
-                                <MenuItem value="medio">Médio</MenuItem>
-                                <MenuItem value="dificil">Difícil</MenuItem>
-                            </Select>
-                        </FormControl>
+                        <div className='minMaxDates'>
+                            <div style={{ display: 'flex', gap: '16px' }} className='minmax'>
+                                <TextField
+                                    label="Mínimo de palavras"
+                                    fullWidth
+                                    type='number'
+                                    margin="normal"
+                                    name="min"
+                                    value={proposta.texto}
+                                    onChange={handleChange}
+                                />
+                                <TextField
+                                    label="Máximo de palavras"
+                                    fullWidth
+                                    type='number'
+                                    margin="normal"
+                                    name="max"
+                                    value={proposta.texto}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            <div style={{ display: 'flex', gap: '15px' }} className='dates'>
+                                <DateTimePicker onChange={value => formatDateValue(value, "aplicacao")}
+                                    slotProps={{ textField: { fullWidth: true } }}
+                                    label="Data de aplicação"
+                                />
+                                <DateTimePicker onChange={value => formatDateValue(value, "entrega")}
+                                    slotProps={{ textField: { fullWidth: true } }}
+                                    label="Data para entrega"
+                                />
+                            </div>
+                        </div>
                         <div style={{ display: 'flex', gap: 10, justifyContent: 'center', marginTop: 30 }}>
                             <Button type="submit" variant="contained" color="primary">
                                 Cadastrar Proposta

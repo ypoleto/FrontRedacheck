@@ -3,7 +3,8 @@ const usuario = {
     nome: "Maria",
     email: "maria@email.com",
     senha: "senha",
-    perfil: "professor"
+    perfil: "aluno",
+    cidades: [4104303,4118808 ]
 };
 
 export { usuario };

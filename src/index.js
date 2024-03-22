@@ -4,6 +4,7 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import App from './App';
 import Home from './routes/Home';
+import Login from './routes/Login';
 import NovaProposta from './routes/NovaProposta';
 import NovaRedacao from './routes/NovaRedacao';
 import Sobre from './routes/Sobre';

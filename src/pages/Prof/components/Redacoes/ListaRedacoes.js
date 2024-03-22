@@ -13,7 +13,7 @@ function ListaRedacoes() {
             titulo: 'Adoção de maiores de idade',
             genero: 'Argumentativo',
             aluno: {
-                nome: "askdjalsk",
+                nome: "Maria",
                 turma: "1º ano"
             }
 
@@ -23,7 +23,7 @@ function ListaRedacoes() {
             titulo: 'Adoção de maiores de idade',
             genero: 'Argumentativo',
             aluno: {
-                nome: "askdjalsk",
+                nome: "Joao",
                 turma: "1º ano"
             }
 
@@ -44,12 +44,11 @@ function ListaRedacoes() {
                     <Grid item xs={8} sm={4} md={4} lg={2} key={index}>
                         <div className='boxRedacaoProf'>
                             <div className='infosBoxRedacaoProf'>
-                                <div style={{ fontSize: 18 }}> {redacao.titulo}</div>
-                                <div style={{ fontSize: 14 }}>{redacao.aluno.nome} | {redacao.aluno.turma}</div>
+                                <div style={{ fontSize: 18, fontWeight: 'bold' }}> {redacao.titulo}</div>
+                                <div style={{ fontSize: 14, color: 'gray' }}>{redacao.aluno.nome} | {redacao.aluno.turma}</div>
                             </div>
                             <div style={{ display: 'flex', justifyContent: 'end' }}>
-                                <Button variant="contained" size='small'>
-                                    <EditIcon fontSize='small' />
+                                <Button variant="contained" >
                                     <span style={{ paddingLeft: 5 }}>Corrigir</span>
                                 </Button>
                             </div>

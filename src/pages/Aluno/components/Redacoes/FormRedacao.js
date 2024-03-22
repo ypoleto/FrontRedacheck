@@ -39,7 +39,6 @@ function Redacao() {
         e.preventDefault();
         var params = JSON.parse('{"' + query.substring(1).replace(/&/g, '","').replace(/=/g, '":"') + '"}', function (key, value) { return key === "" ? value : decodeURIComponent(value) })
         var redacaoFinal = Object.assign(params, redacao)
-        console.log('Redacao', redacaoFinal);
 
     };
 

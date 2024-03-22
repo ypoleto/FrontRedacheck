@@ -4,8 +4,8 @@
     background-color: white;
 }
 
-.boxCadastro {
-    padding: 20px;
+.boxCadastroTurma {
+    padding: 10px;
     margin: auto;
     border-radius: 4px;
     justify-content: center;
@@ -24,4 +24,45 @@
 .css-17vbkzs-MuiFormControl-root-MuiTextField-root,
 .css-1iledgx-MuiFormControl-root {
     margin-top: 0px !important;
+}
+
+.fieldsMenores {
+    display: grid;
+    grid-auto-flow: column;
+    gap: 0px 20px;
+}
+
+.formPropostaDivs {
+    display: grid;
+    grid-auto-flow: column;
+    gap: 10px;
+    grid-auto-columns: minmax(0, 1fr);
+    gap: 0px 15px;
+
+}
+
+.minmax{
+    margin: 10px 0px 0px 0px;
+}
+
+
+@media only screen and (max-width: 1500px) {
+    .minMaxDates {
+        display: grid;
+        grid-auto-flow: row;
+    }
+
+    .formPropostaDivs {
+        display: grid;
+        grid-auto-flow: row;
+        gap: 10px;
+    }
+
+    .minmax {
+        margin: 10px 0px 0px 0px;
+    }
+
+    .dates {
+        margin: 0px 0px 10px 0px;
+    }
 }
