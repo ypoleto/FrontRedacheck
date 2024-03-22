@@ -1,3 +1,75 @@
-.loginPage{
-    background-color: aqua;
+.loginPage {
+    display: flex;
+    margin: auto;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.cardLogin {
+    border-radius: 6px;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+    height: 70vh;
+    width: 60%;
+    align-items: center;
+}
+
+.cardLeftLogin {
+    background-image: url(../images/student.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+}
+
+.sombra{
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.377);
+    position: relative;
+    color: white;
+}
+.cardRightLogin {
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    height: 100%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+
+
+.loginInputs{
+    width: 80%;
+   
+}
+.loginForm{
+    display: grid;
+    gap: 20px;
+
+}
+
+@media only screen and (max-width: 1200px) {
+    .cardLogin {
+        width: 80%;
+    }
+
+    .cardLeftLogin {
+        display: none;
+    }
+
+    .cardRightLogin {
+        border-top-left-radius: 6px;
+        border-bottom-left-radius: 6px;
+    }
+}
+
+@media only screen and (min-width:1100px) and (max-width: 1600px) {
+    .cardLogin {
+        width: 80%;
+    }
 }
