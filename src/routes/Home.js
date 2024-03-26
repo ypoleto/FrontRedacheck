@@ -1,21 +1,17 @@
 import React from 'react'
 import InicioProf from '../pages/Prof/InicioProf'
 import InicioAluno from '../pages/Aluno/InicioAluno'
-import Login from '../pages/Login/Login'
-import { usuario } from '../user'
+import { getUser } from '../utils/user'
 
 const Home = () => {
-    // if (usuario.perfil == 'aluno') {
-    //     return (
-    //         <InicioAluno/>
-    //     )
-    // }
-    // return (
-    //     <InicioProf />
-    // )
+    
+    if (getUser().tipo == 'aluno') {
+        return (
+            <InicioAluno />
+        )
+    }
     return (
-        <Login />
+        <InicioProf />
     )
 }
-
 export default Home

@@ -39,7 +39,7 @@ function ListaRedacoes() {
     }
 
     const fetchPropostas = async () => {
-        axios.get('/propostas', {})
+        axios.get('http://localhost:8000/propostas', {})
             .then(response => {
                 setPropostas(response.data)
             })

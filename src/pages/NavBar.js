@@ -4,14 +4,17 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import '../css/NavBar.css';
-import React from 'react';
-import { Link } from 'react-router-dom';
-import HomeIcon from '@mui/icons-material/Home';
-import { usuario } from '../user'
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { TOKEN_KEY, getToken } from '../services/auth';
+import { getUser } from '../utils/user';
 
 function NavBar() {
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [usuario, setUsuario] = useState({ nome: "" });
+  
+  const navigate = useNavigate();
 
   const handleIconClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -21,14 +24,23 @@ function NavBar() {
     setAnchorEl(null);
   }
 
+  const handleLogout = () => {
+    handleClose();
+    localStorage.removeItem('token')
+    navigate('/login')
+  }
+
+  useEffect(() => {
+    setUsuario(getUser())
+  }, []);
 
   return (
-    <div className="nav">
+    < div className="nav" >
       <div style={{ display: 'grid', gridAutoFlow: 'column', gap: 50, alignItems: 'center' }}>
         <Link to="/"><img className='imgLogo' src={require('../images/logo.png')}></img></Link>
         <Link to="/">Início</Link>
         <Link to="/sobre">Sobre</Link>
-        {usuario.perfil === 'professor' && (
+        {usuario.tipo === 'professor' && (
           <Link to="/novaproposta">Nova proposta</Link>
         )}
       </div>
@@ -50,10 +62,10 @@ function NavBar() {
           onMouseLeave={handleClose}
         >
           <MenuItem onClick={handleClose}> <PersonIcon style={{ paddingRight: 10 }} fontSize='small' /> <Link to="/">Minha conta</Link></MenuItem>
-          <MenuItem onClick={handleClose}> <LogoutIcon style={{ paddingRight: 10 }} fontSize='small' /> Sair</MenuItem>
+          <MenuItem onClick={handleLogout}> <LogoutIcon style={{ paddingRight: 10 }} fontSize='small' /> Sair</MenuItem>
         </Menu>
       </div>
-    </div>
+    </div >
   );
 }
 

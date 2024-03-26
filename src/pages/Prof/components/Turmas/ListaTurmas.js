@@ -25,7 +25,7 @@ function ListaTurmas() {
 
     const fetchTurmas = () => {
         setLoading(true);
-        axios.get('/turmas')
+        axios.get('http://localhost:8000/turmas')
             .then(response => {
                 setTurmas(response.data)
             })

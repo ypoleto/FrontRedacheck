@@ -1,12 +1,10 @@
 import React from 'react'
-import InicioProf from '../pages/Prof/InicioProf'
-import InicioAluno from '../pages/Aluno/InicioAluno'
-import { usuario } from '../user'
+import LoginPage from '../pages/Login/Login'
 
 
 const Login = () => {
     return (
-        <h1>Você não está logado!</h1>
+        <LoginPage/>
     )
 }
 

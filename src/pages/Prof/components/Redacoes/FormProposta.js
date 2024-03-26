@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import TitleBoxes from '../../../../components/TitleBoxes';
 import dayjs from 'dayjs';
 import axios from 'axios';
+import api from '../../../../services/api';
 
 function Proposta() {
 

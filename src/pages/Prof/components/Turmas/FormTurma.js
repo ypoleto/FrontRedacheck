@@ -1,7 +1,6 @@
 import { Backdrop, Button, CircularProgress, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import { React, useEffect, useState } from 'react';
 import axios from 'axios';
-import { usuario } from '../../../../user'
 
 function Turma(props) {
 

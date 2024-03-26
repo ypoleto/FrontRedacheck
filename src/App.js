@@ -1,14 +1,26 @@
 import './css/App.css';
 import NavBar from './pages/NavBar';
 import { Outlet } from 'react-router-dom';
-import axios from 'axios';
-axios.defaults.baseURL = 'http://localhost:8000';
+import { getUser, isAuthenticated } from './services/auth'
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 function App() {
-  const logado = false;
+  let navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isAuthenticated()) {
+      navigate('/login')
+    }
+    else {
+      navigate('/')
+    }
+  }, [])
+
+  
   return (
     <div className="App">
-      {logado &&
+      {isAuthenticated &&
         <NavBar />
       }
       <Outlet />
