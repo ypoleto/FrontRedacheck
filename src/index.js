@@ -10,6 +10,7 @@ import NovaRedacao from './routes/NovaRedacao';
 import Sobre from './routes/Sobre';
 import ErrorPage from './pages/ErrorPage/ErrorPage';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Signup from './routes/Signup';
 
 
 const router = createBrowserRouter([
@@ -39,6 +40,11 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/signup",
+    element: <Signup />,
     errorElement: <ErrorPage />,
   }
 ])

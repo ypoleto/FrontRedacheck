@@ -1,34 +1,15 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import '../../../../css/Inicio.css';
 import { Grid } from '@mui/material';
 import Button from '@mui/material/Button';
 import EditIcon from '@mui/icons-material/Edit';
 import TitleBoxes from '../../../../components/TitleBoxes';
+import { getUser } from '../../../../utils/user';
+import axios from 'axios';
 
 function ListaRedacoes() {
 
-    const [redacoes, setRedacoes] = useState([
-        {
-            id: 1,
-            titulo: 'Adoção de maiores de idade',
-            genero: 'Argumentativo',
-            aluno: {
-                nome: "Maria",
-                turma: "1º ano"
-            }
-
-        },
-        {
-            id: 1,
-            titulo: 'Adoção de maiores de idade',
-            genero: 'Argumentativo',
-            aluno: {
-                nome: "Joao",
-                turma: "1º ano"
-            }
-
-        }
-    ]);
+    const [redacoes, setRedacoes] = useState([]);
 
     const getRedacoesPendentes = () => {
         if (redacoes.length == 0) {
@@ -45,7 +26,7 @@ function ListaRedacoes() {
                         <div className='boxRedacaoProf'>
                             <div className='infosBoxRedacaoProf'>
                                 <div style={{ fontSize: 18, fontWeight: 'bold' }}> {redacao.titulo}</div>
-                                <div style={{ fontSize: 14, color: 'gray' }}>{redacao.aluno.nome} | {redacao.aluno.turma}</div>
+                                <div style={{ fontSize: 14, color: 'gray' }}>{redacao.aluno.nome} | {redacao.aluno.turma.nome}</div>
                             </div>
                             <div style={{ display: 'flex', justifyContent: 'end' }}>
                                 <Button variant="contained" >
@@ -58,6 +39,20 @@ function ListaRedacoes() {
             </Grid>
         )
     }
+
+    const fetchRedacoes = async () => {
+        await axios.get('http://localhost:8000/redacoes')
+        .then((response) => {
+            console.log(response);
+            var aux = response.data.filter(item => item.professor == getUser().username);
+            setRedacoes(aux)
+        })
+    }
+
+    useEffect(() => {
+       fetchRedacoes();
+    }, [])
+
 
     return (
         <div className="container">

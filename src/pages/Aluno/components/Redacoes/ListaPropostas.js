@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import dayjs from 'dayjs';
 import { DateRangeIcon } from '@mui/x-date-pickers';
+import {getUser} from '../../../../utils/user'
 
 function ListaRedacoes() {
 
@@ -39,7 +40,7 @@ function ListaRedacoes() {
     }
 
     const fetchPropostas = async () => {
-        axios.get('http://localhost:8000/propostas', {})
+        axios.get('http://localhost:8000/propostas', {params:{turma: getUser().turma}})
             .then(response => {
                 setPropostas(response.data)
             })

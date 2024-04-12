@@ -6,6 +6,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import TitleBoxes from '../../../../components/TitleBoxes';
+import { getUser } from '../../../../utils/user';
 import axios from 'axios';
 
 function ListaTurmas() {
@@ -27,7 +28,8 @@ function ListaTurmas() {
         setLoading(true);
         axios.get('http://localhost:8000/turmas')
             .then(response => {
-                setTurmas(response.data)
+                var aux = response.data.filter(item => item.professor == getUser().username);
+                setTurmas(aux)
             })
             .finally(() => {
                 setLoading(false);

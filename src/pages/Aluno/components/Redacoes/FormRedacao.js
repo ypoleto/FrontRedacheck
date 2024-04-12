@@ -43,7 +43,7 @@ function Redacao() {
     };
 
     const fetchProposta = (id) => {
-        axios.get('/propostas/', { params: { id: id } })
+        axios.get('http://localhost:8000/propostas/', { params: { id: id } })
             .then(response => {
                 setRedacao(response.data[0])
             });
