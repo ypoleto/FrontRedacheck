@@ -11,9 +11,9 @@
     display: grid;
     grid-auto-flow: column;
     grid-auto-columns: minmax(0, 1fr);
-    height: 70vh;
     width: 60%;
-    align-items: center;
+    align-items: center;box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+
 }
 
 .cardLeftLogin {
@@ -21,15 +21,10 @@
     background-repeat: no-repeat;
     background-size: cover;
     height: 100%;
+    padding: 30px;
+
 }
 
-.sombra{
-    height: 100%;
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.377);
-    position: relative;
-    color: white;
-}
 .cardRightLogin {
     border-top-right-radius: 6px;
     border-bottom-right-radius: 6px;
@@ -39,6 +34,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 30px;
     gap: 50px;
 }
 

@@ -4,12 +4,14 @@ import { useEffect, useState } from 'react';
 import { isAuthenticated, loginUser } from "../../services/auth";
 import { useNavigate } from 'react-router-dom';
 import api from '../../services/api';
+import { isValidEmail } from '../../utils/validators'
 function LoginPage() {
 
     const [login, setLogin] = useState({})
     const [users, setUsers] = useState()
     const [turmas, setTurmas] = useState()
     const [errorUser, setErrorUser] = useState(false)
+    const [errorEmail, setErrorEmail] = useState(false)
     const [estados, setEstados] = useState([])
     const [cidades, setCidades] = useState([false])
     const [errorTurma, setErrorTurma] = useState(false)
@@ -34,6 +36,14 @@ function LoginPage() {
                 [e.target.name]: [e.target.value],
             });
         }
+        if (e.target.name === 'email') {
+            if (!isValidEmail(e.target.value)) {
+                setErrorEmail(true)
+            }
+            else {
+                setErrorEmail(false)
+            }
+        }
     };
 
     const handleChangeUser = (e) => {
@@ -43,6 +53,8 @@ function LoginPage() {
         });
         if (users.find(user => user.username === e.target.value)) {
             setErrorUser(true)
+        }else{
+            setErrorUser(false)
         }
     }
     const handleChangeTurma = (e) => {
@@ -59,24 +71,28 @@ function LoginPage() {
     }
 
     const handleSubmit = async (e) => {
-        console.log(e);
         e.preventDefault();
-        var aux = login
-        delete aux.estado
-        aux.cidades = cidadesSelecionadas
-        if (aux.tipo === 'professor') {
-            aux.turmas = []
+        
+        if (errorEmail || errorTurma || errorUser) {
+            console.log("Verifique todos os campos.");
+            return; 
+        }
+    
+        // Restante do código para enviar os dados para a API
+        var aux = login;
+        delete aux.estado;
+        aux.cidades = cidadesSelecionadas;
+        if (aux.tipo === 'aluno') {
+            aux.turmas = [];
         }
         try {
             api.post('/users', aux)
                 .then(() => {
-                    navigate('/login')
-                })
+                    navigate('/login');
+                });
+        } catch (err) {
+            console.log('Erro:', err);
         }
-        catch (err) {
-            console.log(err)
-        }
-        console.log('submit: ', aux);
     };
 
     const getAllUsers = () => {
@@ -112,7 +128,6 @@ function LoginPage() {
         getEstados()
     }, [])
 
-
     return (
         <div className="loginPage">
             <div className='cardLogin'>
@@ -122,15 +137,17 @@ function LoginPage() {
                         <form className='loginForm' onSubmit={handleSubmit}>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                                 <TextField
+                                    required
                                     label="Nome"
                                     fullWidth
                                     margin="normal"
                                     name="nome"
                                     value={login.nome}
-                                    onChange={handleChangeUser}
+                                    onChange={handleChange}
 
                                 />
                                 <TextField
+                                    required
                                     label="Usuario"
                                     fullWidth
                                     margin="normal"
@@ -141,15 +158,20 @@ function LoginPage() {
                                     helperText={errorUser ? 'Usuário já cadastrado!' : ''}
                                 />
                                 <TextField
+                                    required
                                     label="Email"
                                     fullWidth
                                     margin="normal"
                                     name="email"
                                     value={login.email}
+                                    error={errorEmail}
                                     onChange={handleChange}
+                                    helperText={errorEmail ? " Digite um email válido" : ""}
                                 />
                                 <TextField
+                                    required
                                     label="Senha"
+                                    type='password'
                                     fullWidth
                                     margin="normal"
                                     name="password"
@@ -175,14 +197,15 @@ function LoginPage() {
                                 </FormControl>
                                 {login.tipo === 'aluno' && (
                                     <TextField
+                                        required
                                         label="Código da turma"
                                         fullWidth
                                         margin="normal"
-                                        name="turmas"
+                                        name="turma"
                                         value={login.turmas}
                                         onChange={handleChangeTurma}
                                         error={errorTurma}
-                                        helperText={errorTurma ? 'Turma não encontrada!' : ''}
+                                        helperText={errorTurma ? 'Turma não encontrada' : ''}
                                     />
                                 )}
                             </div>
@@ -202,37 +225,59 @@ function LoginPage() {
                                     ))}
                                 </Select>
                             </FormControl>
-                            {console.log('aaaa', login.tipo)}
-                            {login.estado && login.tipo && (
-                                <FormControl fullWidth>
-                                    <InputLabel id="label-select">{login.tipo === 'professor' ? 'Cidades' : 'Cidade'}</InputLabel>
-                                    <Select
-                                        required
-                                        id="demo-multiple-checkbox"
-                                        labelId="demo-multiple-checkbox-label"
-                                        input={<OutlinedInput label="Tag" />}
-                                        multiple={login.tipo === 'professor'}
-                                        onChange={e => setCidadesSelecionadas(e.target.value)}
-                                        value={cidadesSelecionadas}
-                                        renderValue={(selected) => {
-                                            return selected
-                                                .map(id => {
-                                                    const cidade = cidades.find(cidade => cidade.id === id);
-                                                    return cidade ? cidade.nome : '';
-                                                })
-                                                .filter(nome => nome !== '')
-                                                .join(', ');
-                                        }}
-                                    >
-                                        {cidades && cidades.map((opcao) => (
-                                            <MenuItem key={opcao.id} value={opcao.id}>
-                                                <Checkbox checked={cidadesSelecionadas.indexOf(opcao.id) > -1} />
-                                                <ListItemText primary={opcao.nome} />
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
-                                </FormControl>
-                            )}
+                            <FormControl fullWidth>
+                                {login.tipo === 'professor' && (
+                                    <>
+                                        <InputLabel id="label-select">Cidades</InputLabel>
+                                        <Select
+                                            required
+                                            disabled={!login.estado && cidades.length > 0}
+                                            id="demo-multiple-checkbox"
+                                            labelId="demo-multiple-checkbox-label"
+                                            input={<OutlinedInput label="Tag" />}
+                                            multiple
+                                            onChange={e => setCidadesSelecionadas(e.target.value)}
+                                            value={cidadesSelecionadas}
+                                            renderValue={(selected) => {
+                                                return selected
+                                                    .map(id => {
+                                                        const cidade = cidades.find(cidade => cidade.id === id);
+                                                        return cidade ? cidade.nome : '';
+                                                    })
+                                                    .filter(nome => nome !== '')
+                                                    .join(', ');
+                                            }}
+                                        >
+                                            {cidades && cidades.map((opcao) => (
+                                                <MenuItem key={opcao.id} value={opcao.id}>
+                                                    <Checkbox checked={cidadesSelecionadas.indexOf(opcao.id) > -1} />
+                                                    <ListItemText primary={opcao.nome} />
+                                                </MenuItem>
+                                            ))}
+                                        </Select>
+                                    </>
+                                )}
+                                {login.tipo === 'aluno' && (
+                                    <>
+                                        <InputLabel id="label-select">Cidade</InputLabel>
+                                        <Select
+                                            required
+                                            disabled={!login.estado && cidades.length > 0}
+                                            id="demo-multiple-checkbox"
+                                            labelId="demo-multiple-checkbox-label"
+                                            input={<OutlinedInput label="Tag" />}
+                                            onChange={e => setCidadesSelecionadas([e.target.value])}
+                                            value={cidadesSelecionadas}
+                                        >
+                                            {cidades && cidades.map((opcao) => (
+                                                <MenuItem key={opcao.id} value={opcao.id}>
+                                                    <ListItemText primary={opcao.nome} />
+                                                </MenuItem>
+                                            ))}
+                                        </Select>
+                                    </>
+                                )}
+                            </FormControl>
                             <Button type='submit' fullWidth size='large' variant='contained'>
                                 Cadastrar
                             </Button>
