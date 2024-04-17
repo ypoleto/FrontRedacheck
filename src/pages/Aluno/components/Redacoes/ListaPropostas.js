@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import '../../../../css/Inicio.css';
-import { Grid } from '@mui/material';
+import { Backdrop, CircularProgress, Grid } from '@mui/material';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import TitleBoxes from '../../../../components/TitleBoxes';
@@ -8,11 +8,12 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import dayjs from 'dayjs';
 import { DateRangeIcon } from '@mui/x-date-pickers';
-import {getUser} from '../../../../utils/user'
+import { getUser } from '../../../../utils/user'
 
 function ListaRedacoes() {
 
     const [propostas, setPropostas] = useState([]);
+    const [loading, setLoading] = useState([]);
     let navigate = useNavigate();
 
 
@@ -40,12 +41,16 @@ function ListaRedacoes() {
     }
 
     const fetchPropostas = async () => {
+        setLoading(true)
         const turmaFilter = getUser().turma || getUser().turmas[0];
         console.log('getUser', turmaFilter);
         axios.get(`http://localhost:8000/propostas?turma=${turmaFilter}`)
             .then(response => {
                 setPropostas(response.data)
             })
+            .finally(() => {
+                setLoading(false);
+            });
     }
 
     const getPropostas = () => {
@@ -99,7 +104,11 @@ function ListaRedacoes() {
             <div className='list'>
                 <TitleBoxes title="Propostas de redação" />
                 <div className="boxList">
-                    {getPropostas()}
+                    {loading ? (
+                        <div style={{ textAlign: 'center', marginTop: '20px' }}><CircularProgress/></div>
+                    ) : (
+                        getPropostas()
+                    )}
                 </div>
             </div>
         </div>
