@@ -40,7 +40,9 @@ function ListaRedacoes() {
     }
 
     const fetchPropostas = async () => {
-        axios.get('http://localhost:8000/propostas', {params:{turma: getUser().turma}})
+        const turmaFilter = getUser().turma || getUser().turmas[0];
+        console.log('getUser', turmaFilter);
+        axios.get(`http://localhost:8000/propostas?turma=${turmaFilter}`)
             .then(response => {
                 setPropostas(response.data)
             })
