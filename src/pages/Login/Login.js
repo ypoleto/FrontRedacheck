@@ -42,7 +42,7 @@ function LoginPage() {
     } catch (error) {
       console.log('Ocorreu um erro:', error.request.status);
       if (error.request.status === 401) {
-        setError({message: "Usuário ou senha inválidos!", code: 401})
+        setError({ message: "Usuário ou senha inválidos!", code: 401 })
       }
       setLoading(false)
     }
@@ -53,48 +53,54 @@ function LoginPage() {
       <div className='cardLogin'>
         <>
           <div className='cardLeftLogin'>
-            <div className='sombra'>
-
-            </div>
+              <div className='studentDiv'>
+              </div>
           </div>
           <div className='cardRightLogin'>
-            <img src={require('../../images/logotext.png')} style={{ width: '40%' }} />
-            <div className='loginInputs'>
-              <form className='loginForm' onSubmit={handleSubmit}>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                  <TextField
-                    label="Usuario"
-                    fullWidth
-                    margin="normal"
-                    name="username"
-                    value={login.username}
-                    onChange={handleChange}
-                  />
-                  <TextField
-                    label="Senha"
-                    fullWidth
-                    margin="normal"
-                    type='password'
-                    name="password"
-                    value={login.password}
-                    onChange={handleChange}
-                  />
-                  {error &&(
-                    <Alert severity="error">{error.message}</Alert>
-                  )}
-                </div>
-                <LoadingButton loadingPosition="start" loading={loading} type='submit' fullWidth size='large' variant='contained'>
-                  Entrar
-                </LoadingButton>
-              </form>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <img src={require('../../images/logo.png')} style={{ width: '10%' }} />
+              <h1>Bem vindo de volta!</h1>
+              <span style={{ color: 'gray' }}>Faça login para continuar</span>
             </div>
-            <div style={{ width: '80%', fontSize: 14 }}>
-              <Divider>ou</Divider>
+            <div className='login'>
+              <div className='loginInputs'>
+                <form className='loginForm' onSubmit={handleSubmit}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                    <TextField
+                      label="Usuario"
+                      fullWidth
+                      margin="normal"
+                      name="username"
+                      value={login.username}
+                      onChange={handleChange}
+                    />
+                    <TextField
+                      label="Senha"
+                      fullWidth
+                      margin="normal"
+                      type='password'
+                      name="password"
+                      value={login.password}
+                      onChange={handleChange}
+                    />
+                    {error && (
+                      <Alert severity="error">{error.message}</Alert>
+                    )}
+                  </div>
+                  <LoadingButton loadingPosition="start" loading={loading} type='submit' fullWidth size='large' variant='contained'>
+                    Entrar
+                  </LoadingButton>
+                </form>
+              </div>
+              <div style={{ width: '80%', fontSize: 14 }}>
+                <Divider>ou</Divider>
+              </div>
+              <span style={{ fontSize: 14 }}>
+                Você é novo?
+                <Button onClick={() => navigate('/signup')} size='small' style={{ textTransform: 'none' }}>Cadastre-se</Button>
+              </span>
             </div>
-            <span style={{ fontSize: 14 }}>
-              Você é novo?
-              <Button onClick={() => navigate('/signup')} size='small' style={{ textTransform: 'none' }}>Cadastre-se</Button>
-            </span>
+
           </div>
         </>
       </div>

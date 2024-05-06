@@ -25,8 +25,8 @@ function ListaRedacoes() {
                     <Grid item xs={8} sm={4} md={4} lg={2} key={index}>
                         <div className='boxRedacaoProf'>
                             <div className='infosBoxRedacaoProf'>
-                                <div style={{ fontSize: 18, fontWeight: 'bold' }}> {redacao.titulo}</div>
-                                <div style={{ fontSize: 14, color: 'gray' }}>{redacao.aluno.nome} | {redacao.aluno.turma.nome}</div>
+                                <div style={{ fontSize: 15, fontWeight: '700' }}> {redacao.proposta.tema}</div>
+                                <div style={{ fontSize: 14, color: 'gray' }}>{redacao.aluno.nome} | {redacao.aluno.turma}</div>
                             </div>
                             <div style={{ display: 'flex', justifyContent: 'end' }}>
                                 <Button variant="contained" >

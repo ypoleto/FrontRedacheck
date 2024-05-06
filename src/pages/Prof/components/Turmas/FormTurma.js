@@ -6,7 +6,7 @@ function Turma(props) {
 
     const [loading, setLoading] = useState(false);
     const [colegios, setColegios] = useState([]);
-    const [estados, setEstados] = useState([]);
+    const [cidades, setCidades] = useState([]);
 
     const handleSubmit = e => {
         e.preventDefault()
@@ -28,24 +28,29 @@ function Turma(props) {
         props.setDialogNovaTurma(false)
     };
 
-    // useEffect(() => {
-    //     if (props.method === "PUT") {
-    //         setLoading(true)
-    //         console.log('oi', props.turma);
-    //         axios.get(`/turmas/${props.turma.id}`)
-    //             .then((response) => {
-    //                 var newObj = Object.assign(props.turma, response.data);
-    //                 newObj.colegio = parseInt(newObj.colegio);
-    //                 newObj.cidade = parseInt(newObj.cidade);
-    //                 props.setTurma(newObj)
-    //             }).catch((error) => {
-    //                 console.log(error);
-    //             })
-    //             .finally(() =>
-    //                 setLoading(false)
-    //             );
-    //     }
-    // }, [props.method])
+    // const fetchColegios = ()=>{
+    //     const cidades = 
+    // }
+
+    useEffect(() => {
+        // fetchColegios();
+        if (props.method === "PUT") {
+            setLoading(true)
+            console.log('oi', props.turma);
+            axios.get(`/turmas/${props.turma.id}`)
+                .then((response) => {
+                    var newObj = Object.assign(props.turma, response.data);
+                    newObj.colegio = parseInt(newObj.colegio);
+                    newObj.cidade = parseInt(newObj.cidade);
+                    props.setTurma(newObj)
+                }).catch((error) => {
+                    console.log(error);
+                })
+                .finally(() =>
+                    setLoading(false)
+                );
+        }
+    }, [props.method])
 
 
     return (

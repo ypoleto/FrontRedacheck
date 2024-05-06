@@ -81,10 +81,11 @@ function LoginPage() {
         // Restante do código para enviar os dados para a API
         var aux = login;
         delete aux.estado;
-        aux.cidades = cidadesSelecionadas;
-        if (aux.tipo === 'aluno') {
-            aux.turmas = [];
+        aux.cidades = cidadesSelecionadas.toString();
+        if (aux.tipo === 'professor') {
+            aux.turmas = "";
         }
+        console.log(aux);
         try {
             api.post('/users', aux)
                 .then(() => {
