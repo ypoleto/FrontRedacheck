@@ -2,18 +2,18 @@ import { useEffect, useState } from 'react';
 import '../../../../css/Inicio.css';
 import { Backdrop, CircularProgress, Grid } from '@mui/material';
 import Button from '@mui/material/Button';
-import AddIcon from '@mui/icons-material/Add';
 import TitleBoxes from '../../../../components/TitleBoxes';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import dayjs from 'dayjs';
 import { DateRangeIcon } from '@mui/x-date-pickers';
-import { getUser } from '../../../../utils/user'
+import { getUser } from '../../../../utils/user';
 
 function ListaRedacoes() {
 
     const [propostas, setPropostas] = useState([]);
     const [loading, setLoading] = useState([]);
+    const [user, setUser] = useState();
     let navigate = useNavigate();
 
 
@@ -26,8 +26,8 @@ function ListaRedacoes() {
 
     const getDificuldade = (id) => {
         const dificuldadeConfig = {
-            1: { backgroundColor: '#59c948', texto: 'Fácil' },
-            2: { backgroundColor: '#f2e07d', texto: 'Médio' },
+            'facil': { backgroundColor: '#59c948', texto: 'Fácil' },
+            'medio': { backgroundColor: '#f2e07d', texto: 'Médio' },
             default: { backgroundColor: '#d83636', texto: 'Difícil' }
         };
 
@@ -42,9 +42,11 @@ function ListaRedacoes() {
 
     const fetchPropostas = async () => {
         setLoading(true)
-        const turmaFilter = getUser().turma || getUser().turmas[0];
-        console.log('getUser', turmaFilter);
-        axios.get(`http://localhost:8000/propostas?turma=${turmaFilter}`)
+        const user = getUser();
+        const params = {
+            user_id: user.user_id
+        }
+        axios.get(`http://localhost:8000/propostas`, {params})
             .then(response => {
                 setPropostas(response.data)
             })
@@ -69,17 +71,17 @@ function ListaRedacoes() {
                             <div className='infosBoxRedacaoAluno'>
                                 <div style={{ fontSize: 16, fontWeight: 600, display: 'flex', gap: 10 }}>
                                     <div>{getDificuldade(proposta.dificuldade)}</div>
-                                    <span>{proposta.genero}</span>
+                                    <span>{proposta.genero.nome}</span>
                                 </div>
                                 <div style={{ fontSize: 12 }}>
                                     <span>{proposta.tema}</span>
                                 </div>
                                 <div style={{ fontSize: 12, color: 'grey', display: 'flex', gap: 5 }}>
                                     <DateRangeIcon style={{ fontSize: '14px' }} />
-                                    {dayjs(proposta.aplicacao).format("DD/MM/YYYY (HH:mm)")} - {dayjs(proposta.entrega).format("DD/MM/YYYY (HH:mm)")}
+                                    {dayjs(proposta.data_aplicacao).format("DD/MM/YYYY (HH:mm)")} - {dayjs(proposta.data_entrega).format("DD/MM/YYYY (HH:mm)")}
                                 </div>
                                 <div style={{ fontSize: 12, color: 'grey', display: 'flex', gap: 5 }}>
-                                    <span>Palavras: {proposta.min} a {proposta.max}  </span>
+                                    <span>Palavras: {proposta.min_palavras} a {proposta.max_palavras}  </span>
                                 </div>
                             </div>
                             <div style={{ alignSelf: 'center' }}>
@@ -98,14 +100,13 @@ function ListaRedacoes() {
         fetchPropostas();
     }, [])
 
-
     return (
         <div className="container">
             <div className='list'>
                 <TitleBoxes title="Propostas de redação" />
                 <div className="boxList">
                     {loading ? (
-                        <div style={{ textAlign: 'center', marginTop: '20px' }}><CircularProgress/></div>
+                        <div style={{ textAlign: 'center', marginTop: '20px' }}><CircularProgress /></div>
                     ) : (
                         getPropostas()
                     )}

@@ -1,5 +1,6 @@
 import { Backdrop, Button, CircularProgress, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import { React, useEffect, useState } from 'react';
+import { fetchUser } from '../../../../utils/user';
 import axios from 'axios';
 
 function Turma(props) {
@@ -28,12 +29,13 @@ function Turma(props) {
         props.setDialogNovaTurma(false)
     };
 
-    // const fetchColegios = ()=>{
-    //     const cidades = 
-    // }
+    const fetchColegios = ()=>{
+        // const cidades = fetchUser().cidades;
+        // console.log('cidades', cidades);
+    }
 
     useEffect(() => {
-        // fetchColegios();
+        fetchColegios();
         if (props.method === "PUT") {
             setLoading(true)
             console.log('oi', props.turma);

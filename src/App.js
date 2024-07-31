@@ -1,7 +1,7 @@
 import './css/App.css';
 import NavBar from './pages/NavBar';
 import { Outlet } from 'react-router-dom';
-import { getUser, isAuthenticated } from './services/auth'
+import { fetchUser, isAuthenticated } from './services/auth'
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 

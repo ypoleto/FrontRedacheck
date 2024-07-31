@@ -5,12 +5,10 @@ import { useNavigate } from 'react-router-dom';
 import { getUser } from '../utils/user'
 
 const Home = () => {
-    console.log(getUser());
     const user = getUser();
     const navigate = useNavigate();
 
     if (!user) {
-        console.log('aaaaaaaaaaa');
         navigate('/login')
     }
     else {

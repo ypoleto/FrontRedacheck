@@ -26,10 +26,13 @@ function ListaTurmas() {
 
     const fetchTurmas = () => {
         setLoading(true);
-        axios.get('http://localhost:8000/turmas')
+        const params = {
+            professor_id: getUser().user_id
+        }
+        axios.get('http://localhost:8000/turmas', {params})
             .then(response => {
-                var aux = response.data.filter(item => item.professor == getUser().username);
-                setTurmas(aux)
+                console.log('response', response);
+                setTurmas(response.data)
             })
             .finally(() => {
                 setLoading(false);

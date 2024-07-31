@@ -6,7 +6,6 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import '../css/NavBar.css';
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { TOKEN_KEY, getToken } from '../services/auth';
 import { getUser } from '../utils/user';
 
 function NavBar() {
