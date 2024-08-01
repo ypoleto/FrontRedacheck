@@ -8,21 +8,24 @@ import { Link } from 'react-router-dom';
 import TitleBoxes from '../../../../components/TitleBoxes';
 import dayjs from 'dayjs';
 import axios from 'axios';
-import api from '../../../../services/api';
+import { getUser } from '../../../../utils/user';
 
 function Proposta() {
 
     const [proposta, setProposta] = useState({
         tema: '',
-        genero: '',
-        min: '',
-        max: '',
-        aplicacao: '',
-        entrega: '',
+        genero_id: '',
+        min_palavras: '',
+        max_palavras: '',
+        data_aplicacao: '',
+        data_entrega: '',
         dificuldade: '',
+        turma_id: '',
+        user_id: getUser().user_id,
     });
     const [loading, setLoading] = useState(false);
     const [generos, setGeneros] = useState([]);
+    const [turmas, setTurmas] = useState([]);
 
     const handleChange = (e) => {
         setProposta({
@@ -33,9 +36,20 @@ function Proposta() {
 
     const fetchGeneros = () => {
         setLoading(true);
-        axios.get('/generos')
+        axios.get('http://localhost:8000/generos')
             .then(response => {
                 setGeneros(response.data)
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    }
+
+    const fetchTurmas = () => {
+        setLoading(true);
+        axios.get('http://localhost:8000/turmas')
+            .then(response => {
+                setTurmas(response.data)
             })
             .finally(() => {
                 setLoading(false);
@@ -45,7 +59,9 @@ function Proposta() {
     const handleSubmit = (e) => {
         e.preventDefault();
         setLoading(true);
-        axios.post('/propostas', proposta)
+        const turma_id = proposta.turma_id
+        delete proposta.turma_id
+        axios.post(`http://localhost:8000/propostas?turma_id=${turma_id}`, proposta)
             .then(() => {
                 alert('Adicionado!');
             })
@@ -67,6 +83,7 @@ function Proposta() {
 
     useEffect(() => {
         fetchGeneros();
+        fetchTurmas();
     }, [])
 
 
@@ -86,12 +103,12 @@ function Proposta() {
                                     required
                                     labelId="label-select"
                                     label="Turma"
-                                    name='genero'
+                                    name='turma_id'
                                     onChange={handleChange}
                                 >
-                                    {generos && generos.map((opcao) => (
-                                        <MenuItem key={opcao._id} value={opcao.value}>
-                                            {opcao.value}
+                                    {turmas && turmas.map((opcao) => (
+                                        <MenuItem key={opcao.turma_id} value={opcao.turma_id}>
+                                            {opcao.nome} - {opcao.colegio}
                                         </MenuItem>
                                     ))}
                                 </Select>
@@ -114,12 +131,12 @@ function Proposta() {
                                     required
                                     labelId="label-select"
                                     label="Gênero textual"
-                                    name='genero'
+                                    name='genero_id'
                                     onChange={handleChange}
                                 >
                                     {generos && generos.map((opcao) => (
-                                        <MenuItem key={opcao._id} value={opcao.value}>
-                                            {opcao.value}
+                                        <MenuItem key={opcao.genero_id} value={opcao.genero_id}>
+                                            {opcao.nome}
                                         </MenuItem>
                                     ))}
                                 </Select>
@@ -145,7 +162,7 @@ function Proposta() {
                                     fullWidth
                                     type='number'
                                     margin="normal"
-                                    name="min"
+                                    name="min_palavras"
                                     value={proposta.texto}
                                     onChange={handleChange}
                                 />
@@ -154,17 +171,17 @@ function Proposta() {
                                     fullWidth
                                     type='number'
                                     margin="normal"
-                                    name="max"
+                                    name="max_palavras"
                                     value={proposta.texto}
                                     onChange={handleChange}
                                 />
                             </div>
                             <div style={{ display: 'flex', gap: '15px' }} className='dates'>
-                                <DateTimePicker onChange={value => formatDateValue(value, "aplicacao")}
+                                <DateTimePicker onChange={value => formatDateValue(value, "data_aplicacao")}
                                     slotProps={{ textField: { fullWidth: true } }}
                                     label="Data de aplicação"
                                 />
-                                <DateTimePicker onChange={value => formatDateValue(value, "entrega")}
+                                <DateTimePicker onChange={value => formatDateValue(value, "data_entrega")}
                                     slotProps={{ textField: { fullWidth: true } }}
                                     label="Data para entrega"
                                 />

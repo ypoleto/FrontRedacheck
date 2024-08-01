@@ -1,6 +1,7 @@
 import '../../css/Inicio.css';
 import ListaTurmas from './components/Turmas/ListaTurmas';
 import ListaRedacoes from './components/Redacoes/ListaRedacoes';
+import ListaPropostas from './components/Redacoes/ListaPropostas';
 
 function Inicio() {
   return (
@@ -10,6 +11,9 @@ function Inicio() {
       </div>
       <div>
         <ListaRedacoes />
+      </div>
+      <div>
+        <ListaPropostas/>
       </div>
     </div>
   );
