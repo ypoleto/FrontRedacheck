@@ -91,6 +91,14 @@
     height: auto;
     background-color: white;
 }
+.codigoTurma{
+    margin: 10px 0px;
+}
+.codigoTurma span{
+    background-color: rgb(235, 235, 235);
+    padding: 3px;
+    font-size: 15px;
+}
 
 @media only screen and (max-width: 1000px) {
     .principalProf {

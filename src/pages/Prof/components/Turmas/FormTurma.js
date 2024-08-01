@@ -1,21 +1,23 @@
-import { Backdrop, Button, CircularProgress, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
+import { Backdrop, Button, CircularProgress, TextField } from '@mui/material';
 import { React, useEffect, useState } from 'react';
-import { fetchUser } from '../../../../utils/user';
 import axios from 'axios';
+import { getUser } from '../../../../utils/user';
 
 function Turma(props) {
 
     const [loading, setLoading] = useState(false);
-    const [colegios, setColegios] = useState([]);
-    const [cidades, setCidades] = useState([]);
+    const [user] = useState(getUser());
+    const [turmaAtual, setTurmaAtual] = useState({});
 
     const handleSubmit = e => {
         e.preventDefault()
         if (props.method === "POST") {
+            const params = turmaAtual;
+            params.professor = user.user_id;
             setLoading(true);
-            axios.post('/turmas', props.turma)
+            axios.post('http://localhost:8000/turmas/', params)
                 .then(() => {
-                    alert('Adicionado!');
+                    window.location.reload()
                 })
                 .catch(err => {
                     console.error(err);
@@ -25,26 +27,29 @@ function Turma(props) {
                 });
         } else if (props.method === "PUT") {
             setLoading(true)
+            let params = turmaAtual
+            delete params.turma_id;
+            axios.put(`http://localhost:8000/turmas/${props.turma.turma_id}`, turmaAtual)
+                .then(() => {
+                    window.location.reload()
+                })
+                .catch(err => {
+                    console.error(err);
+                })
+                .finally(() => {
+                    setLoading(false);
+                });
         }
         props.setDialogNovaTurma(false)
     };
 
-    const fetchColegios = ()=>{
-        // const cidades = fetchUser().cidades;
-        // console.log('cidades', cidades);
-    }
-
     useEffect(() => {
-        fetchColegios();
         if (props.method === "PUT") {
             setLoading(true)
-            console.log('oi', props.turma);
-            axios.get(`/turmas/${props.turma.id}`)
+            axios.get(`http://localhost:8000/turmas/${props.turma.turma_id}`)
                 .then((response) => {
                     var newObj = Object.assign(props.turma, response.data);
-                    newObj.colegio = parseInt(newObj.colegio);
-                    newObj.cidade = parseInt(newObj.cidade);
-                    props.setTurma(newObj)
+                    setTurmaAtual(newObj)
                 }).catch((error) => {
                     console.log(error);
                 })
@@ -52,7 +57,14 @@ function Turma(props) {
                     setLoading(false)
                 );
         }
-    }, [props.method])
+        else {
+            setTurmaAtual({});
+        }
+    }, [])
+
+    useEffect(() => {
+        console.log('aaa', turmaAtual);
+    }, [turmaAtual])
 
 
     return (
@@ -70,37 +82,29 @@ function Turma(props) {
                         fullWidth
                         margin="normal"
                         name="titulo"
-                        value={props.turma.nome}
+                        value={turmaAtual.nome}
                         onChange={(e) => {
-                            props.setTurma({
-                                ...props.turma,
+                            setTurmaAtual({
+                                ...turmaAtual,
                                 nome: e.target.value
                             })
                         }}
                         required
                     />
-                    <FormControl fullWidth>
-                        <InputLabel id="label-select">Colégio</InputLabel>
-                        <Select
-                            fullWidth
-                            required
-                            labelId="label-select"
-                            label="Colégio"
-                            value={props.turma.colegio}
-                            onChange={(e) => {
-                                props.setTurma({
-                                    ...props.turma,
-                                    colegio: e.target.value
-                                })
-                            }}
-                        >
-                            {colegios && colegios.map((opcao) => (
-                                <MenuItem key={opcao.cod} value={opcao.cod}>
-                                    {opcao.nome}
-                                </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
+                    <TextField
+                        label="Colégio"
+                        fullWidth
+                        margin="normal"
+                        name="colegio"
+                        value={turmaAtual.colegio}
+                        onChange={(e) => {
+                            setTurmaAtual({
+                                ...turmaAtual,
+                                colegio: e.target.value
+                            })
+                        }}
+                        required
+                    />
                     <div style={{ display: 'flex', gap: 15, justifyContent: 'center', marginTop: '55px' }}>
                         <Button fullWidth type="submit" variant="contained" color="primary">
                             Salvar

@@ -43,7 +43,6 @@ function ListaRedacoes() {
     const fetchRedacoes = async () => {
         await axios.get('http://localhost:8000/redacoes')
         .then((response) => {
-            console.log(response);
             var aux = response.data.filter(item => item.professor == getUser().username);
             setRedacoes(aux)
         })

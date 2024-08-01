@@ -29,9 +29,8 @@ function ListaTurmas() {
         const params = {
             professor_id: getUser().user_id
         }
-        axios.get('http://localhost:8000/turmas', {params})
+        axios.get('http://localhost:8000/turmas', { params })
             .then(response => {
-                console.log('response', response);
                 setTurmas(response.data)
             })
             .finally(() => {
@@ -40,7 +39,7 @@ function ListaTurmas() {
     }
 
     const getTurmas = () => {
-        if (turmas.length == 0) {
+        if (turmas.length === 0) {
             return (
                 <div style={{ color: "#9b9b9b", fontSize: '14px', margin: 20 }}>
                     <span>Nenhuma turma cadastrada.</span>
@@ -53,9 +52,22 @@ function ListaTurmas() {
                     <>
                         <div className='boxTurma'>
                             <div>
-                                <div style={{ fontSize: 16, fontWeight: 'bold', textTransform: 'uppercase', marginBottom: 10 }}> {turma.nome}</div>
-                                <div style={{ fontSize: 14 }}> {turma.colegio}</div>
-                                <div style={{ fontSize: 14 }}>{turma.cidade} - {turma.estado}</div>
+                                <div>
+                                    <span style={{ fontSize: 16, fontWeight: 'bold', textTransform: 'uppercase' }}>
+                                        {turma.nome}
+                                    </span>
+                                    <span style={{ margin: '0px 5px' }}>
+                                        -
+                                    </span>
+                                    <span style={{ fontSize: 14 }}>
+                                        {turma.colegio}
+                                    </span>
+                                </div>
+                                <div className='codigoTurma'>
+                                    <span>
+                                        Código da turma: {turma.turma_id}
+                                    </span>
+                                </div>
                             </div>
                             <div style={{ display: 'flex', justifyContent: 'end', alignItems: 'center' }}>
                                 <Button variant='contained' onClick={() => handleEdit(turma)}>
@@ -85,7 +97,7 @@ function ListaTurmas() {
             </Backdrop>
             <div className="container">
                 <div className='list'>
-                    <TitleBoxes add={true} title="Minhas turmas" tooltip="Nova turma" func={() => setDialogNovaTurma(true)} />
+                    <TitleBoxes add={true} title="Minhas turmas" tooltip="Nova turma" func={() => { setDialogNovaTurma(true); setMethod("POST") }} />
                     <div className="boxList">
                         {getTurmas()}
                     </div>
