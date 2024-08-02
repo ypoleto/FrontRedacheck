@@ -24,6 +24,22 @@ function ListaTurmas() {
         setMethod('PUT');
     }
 
+    const handleActive = (t) => {
+        console.log(t);
+        let turmaInativa = t;
+        turmaInativa.turma_ativa = 1;
+        axios.put(`http://localhost:8000/turmas/${t.turma_id}`, turmaInativa)
+            .then(() => {
+                window.location.reload()
+            })
+            .catch(err => {
+                console.error(err);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    }
+
     const fetchTurmas = () => {
         setLoading(true);
         const params = {
@@ -48,35 +64,67 @@ function ListaTurmas() {
         }
         return (
             <>
-                {turmas.map((turma) => (
-                    <>
-                        <div className='boxTurma'>
-                            <div>
-                                <div>
-                                    <span style={{ fontSize: 16, fontWeight: 'bold', textTransform: 'uppercase' }}>
-                                        {turma.nome}
-                                    </span>
-                                    <span style={{ margin: '0px 5px' }}>
-                                        -
-                                    </span>
-                                    <span style={{ fontSize: 14 }}>
-                                        {turma.colegio}
-                                    </span>
+                {
+                    turmas.map((turma) => (
+                        <div key={turma.turma_id}>
+                            {turma.turma_ativa == 1 ? (
+                                <>
+                                    <div className='boxTurma'>
+                                        <div>
+                                            <div>
+                                                <span style={{ fontSize: 16, fontWeight: 'bold', textTransform: 'uppercase' }}>
+                                                    {turma.nome}
+                                                </span>
+                                                <span style={{ margin: '0px 5px' }}>
+                                                    -
+                                                </span>
+                                                <span style={{ fontSize: 14 }}>
+                                                    {turma.colegio}
+                                                </span>
+                                            </div>
+                                            <div className='codigoTurma'>
+                                                <span>
+                                                    Código da turma: {turma.turma_id}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div style={{ display: 'flex', justifyContent: 'end', alignItems: 'center' }}>
+                                            <Button variant='contained' onClick={() => handleEdit(turma)}>
+                                                Editar
+                                            </Button>
+                                        </div>
+                                    </div>
+                                </>
+                            ) : (
+                                <div className='boxTurma'>
+                                    <div>
+                                        <div>
+                                            <span style={{ fontSize: 16, fontWeight: 'bold', textTransform: 'uppercase' }}>
+                                                {turma.nome}
+                                            </span>
+                                            <span style={{ margin: '0px 5px' }}>
+                                                -
+                                            </span>
+                                            <span style={{ fontSize: 14 }}>
+                                                {turma.colegio}
+                                            </span>
+                                        </div>
+                                        <div className='codigoTurma'>
+                                            <span>
+                                                Código da turma: {turma.turma_id}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div style={{ display: 'flex', justifyContent: 'end', alignItems: 'center' }}>
+                                        <Button variant='contained' color='error' onClick={() => handleActive(turma)}>
+                                            Ativar
+                                        </Button>
+                                    </div>
                                 </div>
-                                <div className='codigoTurma'>
-                                    <span>
-                                        Código da turma: {turma.turma_id}
-                                    </span>
-                                </div>
-                            </div>
-                            <div style={{ display: 'flex', justifyContent: 'end', alignItems: 'center' }}>
-                                <Button variant='contained' onClick={() => handleEdit(turma)}>
-                                    Editar
-                                </Button>
-                            </div>
+                            )}
                         </div>
-                    </>
-                ))}
+                    ))
+                }
             </>
         )
     }

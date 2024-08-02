@@ -25,8 +25,9 @@ function ListaRedacoes() {
                     <Grid item xs={8} sm={4} md={4} lg={2} key={index}>
                         <div className='boxRedacaoProf'>
                             <div className='infosBoxRedacaoProf'>
-                                <div style={{ fontSize: 15, fontWeight: '700' }}> {redacao.proposta.tema}</div>
-                                <div style={{ fontSize: 14, color: 'gray' }}>{redacao.aluno.nome} | {redacao.aluno.turma}</div>
+                                <span style={{ fontSize: 15, fontWeight: '700' }}> {redacao.proposta.tema} - {redacao.proposta.genero.nome}</span>
+                                <span style={{ fontSize: 14, color: 'gray' }}>{redacao.aluno.nome} </span>
+                                <span style={{ fontSize: 14 }}>Envio: {redacao.data_envio} </span>
                             </div>
                             <div style={{ display: 'flex', justifyContent: 'end' }}>
                                 <Button variant="contained" >
@@ -41,15 +42,14 @@ function ListaRedacoes() {
     }
 
     const fetchRedacoes = async () => {
-        await axios.get('http://localhost:8000/redacoes')
-        .then((response) => {
-            var aux = response.data.filter(item => item.professor == getUser().username);
-            setRedacoes(aux)
-        })
+        await axios.get('http://localhost:8000/redacoes', { params: { user_id: getUser().user_id } })
+            .then((response) => {
+                setRedacoes(response.data)
+            })
     }
 
     useEffect(() => {
-       fetchRedacoes();
+        fetchRedacoes();
     }, [])
 
 

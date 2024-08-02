@@ -17,11 +17,9 @@ function ListaRedacoes() {
     let navigate = useNavigate();
 
 
-    const newRedacao = (proposta) => {
-        navigate({
-            pathname: '/novaredacao',
-            search: `?proposta=${proposta.id}`
-        })
+    const getPalavras = (texto) => {
+        const words = texto.trim().split(/\s+/); // Quebra o texto em palavras
+        return words.length
     }
 
     const getDificuldade = (id) => {
@@ -40,13 +38,13 @@ function ListaRedacoes() {
         );
     }
 
-    const fetchPropostas = async () => {
+    const fetchRedacoesFeitas = async () => {
         setLoading(true)
         const user = getUser();
         const params = {
             user_id: user.user_id
         }
-        axios.get(`http://localhost:8000/propostas`, {params})
+        axios.get(`http://localhost:8000/redacoes`, { params })
             .then(response => {
                 setPropostas(response.data)
             })
@@ -59,35 +57,26 @@ function ListaRedacoes() {
         if (propostas.length == 0) {
             return (
                 <div style={{ color: "#9b9b9b", fontSize: '14px', margin: 20 }}>
-                    <span>Nenhuma proposta cadastrada.</span>
+                    <span>Nenhuma redação.</span>
                 </div>
             )
         }
         return (
             <Grid container spacing={4} columns={4}>
-                {propostas.map((proposta, index) => (
+                {propostas.map((redacao, index) => (
                     <Grid item xs={8} sm={4} md={4} lg={2} key={index}>
                         <div className='boxRedacaoAluno'>
                             <div className='infosBoxRedacaoAluno'>
-                                <div style={{ fontSize: 16, fontWeight: 600, display: 'flex', gap: 10 }}>
-                                    <div>{getDificuldade(proposta.dificuldade)}</div>
-                                    <span>{proposta.genero.nome}</span>
+                                <span>{redacao.proposta.tema} - {redacao.proposta.genero.nome}</span>
+                                <span>{redacao.titulo}</span>
+                                <span>{getDificuldade(redacao.proposta.dificuldade)}</span>
+                                <span>{redacao.proposta.data_aplicacao}-{redacao.proposta.data_entrega}</span>
+                                <span>{getPalavras(redacao.texto)} tamanho texto</span>
                                 </div>
-                                <div style={{ fontSize: 12 }}>
-                                    <span>{proposta.tema}</span>
-                                </div>
-                                <div style={{ fontSize: 12, color: 'grey', display: 'flex', gap: 5 }}>
-                                    <DateRangeIcon style={{ fontSize: '14px' }} />
-                                    {dayjs(proposta.data_aplicacao).format("DD/MM/YYYY (HH:mm)")} - {dayjs(proposta.data_entrega).format("DD/MM/YYYY (HH:mm)")}
-                                </div>
-                                <div style={{ fontSize: 12, color: 'grey', display: 'flex', gap: 5 }}>
-                                    <span>Palavras: {proposta.min_palavras} a {proposta.max_palavras}  </span>
-                                </div>
-                            </div>
                             <div style={{ alignSelf: 'center' }}>
-                                <Button onClick={() => newRedacao(proposta)} size='medium' variant="contained" >
-                                    <span style={{ paddingLeft: 5 }}>Começar</span>
-                                </Button>
+                                <div>
+                                    <span style={{ paddingLeft: 5 }}>corrigido/nao corrigido</span>
+                                </div>
                             </div>
                         </div>
                     </Grid>
@@ -97,13 +86,13 @@ function ListaRedacoes() {
     }
 
     useEffect(() => {
-        fetchPropostas();
+        fetchRedacoesFeitas();
     }, [])
 
     return (
         <div className="container">
             <div className='list'>
-                <TitleBoxes title="Propostas de redação" />
+                <TitleBoxes title="Redações submetidas" />
                 <div className="boxList">
                     {loading ? (
                         <div style={{ textAlign: 'center', marginTop: '20px' }}><CircularProgress /></div>

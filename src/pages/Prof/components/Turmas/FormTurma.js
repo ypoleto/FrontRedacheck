@@ -43,6 +43,22 @@ function Turma(props) {
         props.setDialogNovaTurma(false)
     };
 
+    const handleDeactivate = () => {
+        console.log(turmaAtual);
+        let turmaAtiva = turmaAtual;
+        turmaAtiva.turma_ativa = 0;
+        axios.put(`http://localhost:8000/turmas/${turmaAtiva.turma_id}`, turmaAtiva)
+            .then(() => {
+                window.location.reload()
+            })
+            .catch(err => {
+                console.error(err);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    }
+
     useEffect(() => {
         if (props.method === "PUT") {
             setLoading(true)
@@ -105,6 +121,11 @@ function Turma(props) {
                         }}
                         required
                     />
+                    {turmaAtual.turma_ativa == 1 && (
+                        <Button onClick={() => handleDeactivate()} fullWidth type="submit" variant="outlined" color="warning">
+                            Desativar turma
+                        </Button>
+                    )}
                     <div style={{ display: 'flex', gap: 15, justifyContent: 'center', marginTop: '55px' }}>
                         <Button fullWidth type="submit" variant="contained" color="primary">
                             Salvar
