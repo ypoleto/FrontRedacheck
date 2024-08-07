@@ -7,6 +7,8 @@ import Home from './routes/Home';
 import Login from './routes/Login';
 import NovaProposta from './routes/NovaProposta';
 import NovaRedacao from './routes/NovaRedacao';
+import NovaCorrecao from './routes/correcao/NovaCorrecao';
+import ListarCorrecao from './routes/correcao/ListarCorrecao';
 import Sobre from './routes/Sobre';
 import ErrorPage from './pages/ErrorPage/ErrorPage';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
@@ -35,8 +37,19 @@ const router = createBrowserRouter([
         path: "/novaredacao",
         element: <NovaRedacao />,
       },
+
+      {
+        path: "/novacorrecao",
+        element: <NovaCorrecao />,
+      },
+      {
+        path: "/correcao",
+        element: <ListarCorrecao />,
+      },
+
     ]
   },
+
   {
     path: "/login",
     element: <Login />,
@@ -46,7 +59,8 @@ const router = createBrowserRouter([
     path: "/signup",
     element: <Signup />,
     errorElement: <ErrorPage />,
-  }
+  },
+
 ])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

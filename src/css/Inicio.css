@@ -92,13 +92,23 @@
     height: auto;
     background-color: white;
 }
-.codigoTurma{
+
+.codigoTurma {
     margin: 10px 0px;
 }
-.codigoTurma span{
+
+.codigoTurma span {
     background-color: rgb(235, 235, 235);
     padding: 3px;
     font-size: 15px;
+}
+
+.boxCorrecao {
+    border-radius: 4px;
+    background-color: white;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
 }
 
 @media only screen and (max-width: 1000px) {
@@ -109,4 +119,4 @@
         grid-template-columns: 2;
         grid-auto-columns: minmax(0, 1fr);
     }
-  }
+}

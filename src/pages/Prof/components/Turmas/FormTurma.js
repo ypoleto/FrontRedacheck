@@ -14,6 +14,7 @@ function Turma(props) {
         if (props.method === "POST") {
             const params = turmaAtual;
             params.professor = user.user_id;
+            params.turma_ativa = 1;
             setLoading(true);
             axios.post('http://localhost:8000/turmas/', params)
                 .then(() => {

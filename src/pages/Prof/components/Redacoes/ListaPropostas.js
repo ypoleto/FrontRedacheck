@@ -3,6 +3,7 @@ import '../../../../css/Inicio.css';
 import { Grid } from '@mui/material';
 import TitleBoxes from '../../../../components/TitleBoxes';
 import { getUser } from '../../../../utils/user';
+import { getHoraFormatada } from '../../../../utils/formatters'
 import axios from 'axios';
 
 function ListaRedacoes() {
@@ -23,11 +24,10 @@ function ListaRedacoes() {
                     <Grid item xs={8} sm={4} md={4} lg={2} key={index}>
                         <div className='boxRedacaoProf'>
                             <div className='infosBoxRedacaoProf'>
-                                <div style={{ fontSize: 15, fontWeight: '700' }}> {proposta.tema}</div>
-                                <div style={{ fontSize: 15, fontWeight: '700' }}> {proposta.genero.nome}</div>
-                                <div style={{ fontSize: 15, fontWeight: '700' }}> {proposta.dificuldade}</div>
-                                <div style={{ fontSize: 15, fontWeight: '700' }}> {proposta.min_palavras} - {proposta.max_palavras} </div>
-                                <div style={{ fontSize: 15, fontWeight: '700' }}> {proposta.data_aplicacao}- {proposta.data_entrega} </div>
+                                <div style={{ fontSize: 15, fontWeight: '700'}}> {proposta.tema} - {proposta.genero.nome}</div>
+                                <div style={{ fontSize: 15}}> {proposta.dificuldade}</div>
+                                <div style={{ fontSize: 15, fontWeight: '700' }}> {proposta.min_palavras}(min) - {proposta.max_palavras}(máx) </div>
+                                <div style={{ fontSize: 15, fontWeight: '700' }}> {getHoraFormatada(proposta.data_aplicacao)}- {getHoraFormatada(proposta.data_entrega)} </div>
                             </div>
                         </div>
                     </Grid>
@@ -40,14 +40,14 @@ function ListaRedacoes() {
         let params = {
             user_id: getUser().user_id
         }
-        await axios.get(`http://localhost:8000/propostas`, {params})
-        .then((response) => {
-            setRedacoes(response.data)
-        })
+        await axios.get(`http://localhost:8000/propostas`, { params })
+            .then((response) => {
+                setRedacoes(response.data)
+            })
     }
 
     useEffect(() => {
-       fetchPropostasCriadas();
+        fetchPropostasCriadas();
     }, [])
 
 

@@ -1,6 +1,4 @@
-import * as JWT from 'jwt-decode';
 import { getToken } from '../services/auth';
-import axios from 'axios';
 
 
 export const getUser = () => {

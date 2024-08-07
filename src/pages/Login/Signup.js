@@ -53,7 +53,7 @@ function LoginPage() {
         });
         if (users.find(user => user.username === e.target.value)) {
             setErrorUser(true)
-        }else{
+        } else {
             setErrorUser(false)
         }
     }
@@ -62,7 +62,7 @@ function LoginPage() {
             ...login,
             [e.target.name]: e.target.value,
         });
-        if (!turmas.find(turma => turma._id === e.target.value)) {
+        if (!turmas.find(turma => turma.turma_id == e.target.value)) {
             setErrorTurma(true)
         }
         else {
@@ -72,22 +72,14 @@ function LoginPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+
         if (errorEmail || errorTurma || errorUser) {
             console.log("Verifique todos os campos.");
-            return; 
+            return;
         }
-    
-        // Restante do código para enviar os dados para a API
-        var aux = login;
-        delete aux.estado;
-        aux.cidades = cidadesSelecionadas.toString();
-        if (aux.tipo === 'professor') {
-            aux.turmas = "";
-        }
-        console.log(aux);
+
         try {
-            api.post('/users', aux)
+            api.post('/users', login)
                 .then(() => {
                     navigate('/login');
                 });
@@ -210,75 +202,7 @@ function LoginPage() {
                                     />
                                 )}
                             </div>
-                            <FormControl fullWidth>
-                                <InputLabel id="label-select">Estado</InputLabel>
-                                <Select
-                                    required
-                                    labelId="label-select"
-                                    label="Estado"
-                                    name='estado'
-                                    onChange={e => { handleChange(e); getCidades(e.target.value) }}
-                                >
-                                    {estados && estados.map((opcao) => (
-                                        <MenuItem key={opcao.id} value={opcao.id}>
-                                            {opcao.nome}
-                                        </MenuItem>
-                                    ))}
-                                </Select>
-                            </FormControl>
-                            <FormControl fullWidth>
-                                {login.tipo === 'professor' && (
-                                    <>
-                                        <InputLabel id="label-select">Cidades</InputLabel>
-                                        <Select
-                                            required
-                                            disabled={!login.estado && cidades.length > 0}
-                                            id="demo-multiple-checkbox"
-                                            labelId="demo-multiple-checkbox-label"
-                                            input={<OutlinedInput label="Tag" />}
-                                            multiple
-                                            onChange={e => setCidadesSelecionadas(e.target.value)}
-                                            value={cidadesSelecionadas}
-                                            renderValue={(selected) => {
-                                                return selected
-                                                    .map(id => {
-                                                        const cidade = cidades.find(cidade => cidade.id === id);
-                                                        return cidade ? cidade.nome : '';
-                                                    })
-                                                    .filter(nome => nome !== '')
-                                                    .join(', ');
-                                            }}
-                                        >
-                                            {cidades && cidades.map((opcao) => (
-                                                <MenuItem key={opcao.id} value={opcao.id}>
-                                                    <Checkbox checked={cidadesSelecionadas.indexOf(opcao.id) > -1} />
-                                                    <ListItemText primary={opcao.nome} />
-                                                </MenuItem>
-                                            ))}
-                                        </Select>
-                                    </>
-                                )}
-                                {login.tipo === 'aluno' && (
-                                    <>
-                                        <InputLabel id="label-select">Cidade</InputLabel>
-                                        <Select
-                                            required
-                                            disabled={!login.estado && cidades.length > 0}
-                                            id="demo-multiple-checkbox"
-                                            labelId="demo-multiple-checkbox-label"
-                                            input={<OutlinedInput label="Tag" />}
-                                            onChange={e => setCidadesSelecionadas([e.target.value])}
-                                            value={cidadesSelecionadas}
-                                        >
-                                            {cidades && cidades.map((opcao) => (
-                                                <MenuItem key={opcao.id} value={opcao.id}>
-                                                    <ListItemText primary={opcao.nome} />
-                                                </MenuItem>
-                                            ))}
-                                        </Select>
-                                    </>
-                                )}
-                            </FormControl>
+
                             <Button type='submit' fullWidth size='large' variant='contained'>
                                 Cadastrar
                             </Button>

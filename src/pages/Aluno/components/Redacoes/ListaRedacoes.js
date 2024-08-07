@@ -13,13 +13,19 @@ function ListaRedacoes() {
 
     const [propostas, setPropostas] = useState([]);
     const [loading, setLoading] = useState([]);
-    const [user, setUser] = useState();
     let navigate = useNavigate();
 
 
     const getPalavras = (texto) => {
         const words = texto.trim().split(/\s+/); // Quebra o texto em palavras
         return words.length
+    }
+
+    const getVisualizarCorrecao = (redacao_id) => {
+        navigate({
+            pathname: '/correcao',
+            search: `?redacao_id=${redacao_id}`
+        })
     }
 
     const getDificuldade = (id) => {
@@ -67,16 +73,19 @@ function ListaRedacoes() {
                     <Grid item xs={8} sm={4} md={4} lg={2} key={index}>
                         <div className='boxRedacaoAluno'>
                             <div className='infosBoxRedacaoAluno'>
+                                <span>{(redacao.status) ? "Corrigido" : "Pendente de Correção"}</span>
                                 <span>{redacao.proposta.tema} - {redacao.proposta.genero.nome}</span>
                                 <span>{redacao.titulo}</span>
                                 <span>{getDificuldade(redacao.proposta.dificuldade)}</span>
                                 <span>{redacao.proposta.data_aplicacao}-{redacao.proposta.data_entrega}</span>
-                                <span>{getPalavras(redacao.texto)} tamanho texto</span>
-                                </div>
+                                <span>{getPalavras(redacao.texto)} palavras</span>
+                            </div>
                             <div style={{ alignSelf: 'center' }}>
-                                <div>
-                                    <span style={{ paddingLeft: 5 }}>corrigido/nao corrigido</span>
-                                </div>
+                                {redacao.status == 1 && (
+                                    <div>
+                                        <Button onClick={() => getVisualizarCorrecao(redacao.id)}>Ver correção</Button>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </Grid>

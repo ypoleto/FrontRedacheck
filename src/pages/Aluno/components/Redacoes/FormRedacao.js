@@ -17,6 +17,7 @@ function Redacao() {
     let [searchParams, setSearchParams] = useSearchParams();
     const [redacao, setRedacao] = useState({
         user_id: getUser().user_id,
+        status: 0
     });
     const [proposta, setProposta] = useState({});
     const query = useLocation().search
@@ -52,8 +53,6 @@ function Redacao() {
             ...redacao,
             data_envio: agora,
         };
-
-        console.log('redacaoComData', redacaoComData);
 
         e.preventDefault();
         axios.post(`http://localhost:8000/redacoes`, redacaoComData)

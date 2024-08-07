@@ -1,15 +1,25 @@
 import { useEffect, useState } from 'react';
 import '../../../../css/Inicio.css';
+import { useNavigate } from "react-router-dom";
 import { Grid } from '@mui/material';
 import Button from '@mui/material/Button';
-import EditIcon from '@mui/icons-material/Edit';
 import TitleBoxes from '../../../../components/TitleBoxes';
 import { getUser } from '../../../../utils/user';
 import axios from 'axios';
+import {getHoraFormatada} from '../../../../utils/formatters'
 
 function ListaRedacoes() {
 
     const [redacoes, setRedacoes] = useState([]);
+    let navigate = useNavigate();
+
+
+    const handleCorrecao = (redacao) => {
+        navigate({
+            pathname: '/novacorrecao',
+            search: `?redacao_id=${redacao.id}`
+        })
+    }
 
     const getRedacoesPendentes = () => {
         if (redacoes.length == 0) {
@@ -27,10 +37,10 @@ function ListaRedacoes() {
                             <div className='infosBoxRedacaoProf'>
                                 <span style={{ fontSize: 15, fontWeight: '700' }}> {redacao.proposta.tema} - {redacao.proposta.genero.nome}</span>
                                 <span style={{ fontSize: 14, color: 'gray' }}>{redacao.aluno.nome} </span>
-                                <span style={{ fontSize: 14 }}>Envio: {redacao.data_envio} </span>
+                                <span style={{ fontSize: 14 }}>Envio: {getHoraFormatada(redacao.data_envio)} </span>
                             </div>
                             <div style={{ display: 'flex', justifyContent: 'end' }}>
-                                <Button variant="contained" >
+                                <Button variant="contained" onClick={() => handleCorrecao(redacao)} >
                                     <span style={{ paddingLeft: 5 }}>Corrigir</span>
                                 </Button>
                             </div>
@@ -56,7 +66,7 @@ function ListaRedacoes() {
     return (
         <div className="container">
             <div className='list'>
-                <TitleBoxes title="Redações Pendentes" tooltip="Nova proposta" />
+                <TitleBoxes title="Redações Pendentes de Correção" tooltip="Nova proposta" />
                 <div className="boxList">
                     {getRedacoesPendentes()}
                 </div>
