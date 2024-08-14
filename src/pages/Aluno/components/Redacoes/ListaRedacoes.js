@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import '../../../../css/Inicio.css';
-import { Backdrop, CircularProgress, Grid } from '@mui/material';
+import { Backdrop, CircularProgress, Grid, Icon } from '@mui/material';
 import Button from '@mui/material/Button';
 import TitleBoxes from '../../../../components/TitleBoxes';
 import { useNavigate } from "react-router-dom";
@@ -8,6 +8,7 @@ import axios from 'axios';
 import dayjs from 'dayjs';
 import { DateRangeIcon } from '@mui/x-date-pickers';
 import { getUser } from '../../../../utils/user';
+import { getHoraFormatada } from '../../../../utils/formatters';
 
 function ListaRedacoes() {
 
@@ -59,6 +60,22 @@ function ListaRedacoes() {
             });
     }
 
+    const getCorrigido = (status) => {
+        if (status == 1) {
+            return (
+                <div style={{ backgroundColor: '#62C948' }} className='rounded-t-md p-1 text-white'>
+                    <span>Corrigido</span>
+                </div>
+            )
+        } else {
+            return (
+                <div style={{ backgroundColor: '#FEC134' }} className='rounded-t-md p-1 text-white'>
+                    <span>Pendente de correção</span>
+                </div>
+            )
+        }
+    }
+
     const getPropostas = () => {
         if (propostas.length == 0) {
             return (
@@ -71,19 +88,24 @@ function ListaRedacoes() {
             <Grid container spacing={4} columns={4}>
                 {propostas.map((redacao, index) => (
                     <Grid item xs={8} sm={4} md={4} lg={2} key={index}>
+                        <div>
+                            {getCorrigido(redacao.status)}
+                        </div>
                         <div className='boxRedacaoAluno'>
                             <div className='infosBoxRedacaoAluno'>
-                                <span>{(redacao.status) ? "Corrigido" : "Pendente de Correção"}</span>
-                                <span>{redacao.proposta.tema} - {redacao.proposta.genero.nome}</span>
-                                <span>{redacao.titulo}</span>
-                                <span>{getDificuldade(redacao.proposta.dificuldade)}</span>
-                                <span>{redacao.proposta.data_aplicacao}-{redacao.proposta.data_entrega}</span>
-                                <span>{getPalavras(redacao.texto)} palavras</span>
+                                <span className='text-lg'>{redacao.titulo}</span>
+                                <span className='text-gray-600 text-base'>{redacao.proposta.tema} - {redacao.proposta.genero.nome}</span>
+                                <div className='text-sm text-gray-600'>
+                                    <DateRangeIcon style={{ fontSize: '15px', marginTop: '-3px' }} />
+                                    <span>
+                                        Entregue em {getHoraFormatada(redacao.data_envio)}
+                                    </span>
+                                </div>
                             </div>
-                            <div style={{ alignSelf: 'center' }}>
+                            <div>
                                 {redacao.status == 1 && (
                                     <div>
-                                        <Button onClick={() => getVisualizarCorrecao(redacao.id)}>Ver correção</Button>
+                                        <Button variant='outlined' fullWidth onClick={() => getVisualizarCorrecao(redacao.id)}>Ver correção</Button>
                                     </div>
                                 )}
                             </div>

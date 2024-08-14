@@ -39,8 +39,8 @@ function ListaRedacoes() {
                                 <span style={{ fontSize: 14, color: 'gray' }}>{redacao.aluno.nome} </span>
                                 <span style={{ fontSize: 14 }}>Envio: {getHoraFormatada(redacao.data_envio)} </span>
                             </div>
-                            <div style={{ display: 'flex', justifyContent: 'end' }}>
-                                <Button variant="contained" onClick={() => handleCorrecao(redacao)} >
+                            <div style={{ display: 'flex', justifyContent: 'end' }} className='mt-5'>
+                                <Button fullWidth variant="outlined" onClick={() => handleCorrecao(redacao)} >
                                     <span style={{ paddingLeft: 5 }}>Corrigir</span>
                                 </Button>
                             </div>
@@ -64,7 +64,7 @@ function ListaRedacoes() {
 
 
     return (
-        <div className="container">
+        <div className="container min-w-full">
             <div className='list'>
                 <TitleBoxes title="Redações Pendentes de Correção" tooltip="Nova proposta" />
                 <div className="boxList">

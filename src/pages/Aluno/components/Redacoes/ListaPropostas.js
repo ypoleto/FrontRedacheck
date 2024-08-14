@@ -85,8 +85,8 @@ function ListaRedacoes() {
                                 </div>
                             </div>
                             <div style={{ alignSelf: 'center' }}>
-                                <Button onClick={() => newRedacao(proposta)} size='medium' variant="contained" >
-                                    <span style={{ paddingLeft: 5 }}>Começar</span>
+                                <Button fullWidth variant="outlined" onClick={() => newRedacao(proposta)} >
+                                    Começar
                                 </Button>
                             </div>
                         </div>

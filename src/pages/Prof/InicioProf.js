@@ -6,15 +6,14 @@ import ListaPropostas from './components/Redacoes/ListaPropostas';
 function Inicio() {
   return (
     <div className="principalProf">
-      <div>
+      <div className='boxesProf'>
         <ListaTurmas />
+        <ListaPropostas />
       </div>
-      <div>
+      <div >
         <ListaRedacoes />
       </div>
-      <div>
-        <ListaPropostas/>
-      </div>
+
     </div>
   );
 }

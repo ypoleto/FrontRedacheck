@@ -89,7 +89,7 @@ function ListaTurmas() {
                                             </div>
                                         </div>
                                         <div style={{ display: 'flex', justifyContent: 'end', alignItems: 'center' }}>
-                                            <Button variant='contained' onClick={() => handleEdit(turma)}>
+                                            <Button fullWidth variant='outlined' onClick={() => handleEdit(turma)}>
                                                 Editar
                                             </Button>
                                         </div>
@@ -116,7 +116,7 @@ function ListaTurmas() {
                                         </div>
                                     </div>
                                     <div style={{ display: 'flex', justifyContent: 'end', alignItems: 'center' }}>
-                                        <Button variant='contained' color='error' onClick={() => handleActive(turma)}>
+                                        <Button fullWidth variant='outlined' color='error' onClick={() => handleActive(turma)}>
                                             Ativar
                                         </Button>
                                     </div>

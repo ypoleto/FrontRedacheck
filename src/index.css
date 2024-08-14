@@ -1,5 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 * {
-  font-family: "Plus Jakarta Sans", sans-serif;
+  font-family: "Lexend", sans-serif;
 }
 
 html {
@@ -9,11 +13,12 @@ body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: linear-gradient(to bottom right, #F4EBEC, #ecebf4);
 }
 
 .MuiButton-root{
-  font-family: "Plus Jakarta Sans", sans-serif !important;
+  font-family: "Lexend", sans-serif !important;
+  font-weight: 400 !important;
+
 }
 
 .css-bdhsul-MuiTypography-root-MuiDialogTitle-root{

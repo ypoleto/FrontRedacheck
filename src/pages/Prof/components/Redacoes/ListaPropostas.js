@@ -10,6 +10,12 @@ function ListaRedacoes() {
 
     const [redacoes, setRedacoes] = useState([]);
 
+    const nivel = {
+        facil: "fácil",
+        medio: "médio",
+        dificil: "difícil"
+    }
+
     const getPropostasCriadas = () => {
         if (redacoes.length == 0) {
             return (
@@ -23,11 +29,11 @@ function ListaRedacoes() {
                 {redacoes.map((proposta, index) => (
                     <Grid item xs={8} sm={4} md={4} lg={2} key={index}>
                         <div className='boxRedacaoProf'>
-                            <div className='infosBoxRedacaoProf'>
-                                <div style={{ fontSize: 15, fontWeight: '700'}}> {proposta.tema} - {proposta.genero.nome}</div>
-                                <div style={{ fontSize: 15}}> {proposta.dificuldade}</div>
-                                <div style={{ fontSize: 15, fontWeight: '700' }}> {proposta.min_palavras}(min) - {proposta.max_palavras}(máx) </div>
-                                <div style={{ fontSize: 15, fontWeight: '700' }}> {getHoraFormatada(proposta.data_aplicacao)}- {getHoraFormatada(proposta.data_entrega)} </div>
+                            <div className='infosBoxRedacaoProf text-gray-700'>
+                                <span className='text-lg text-black'>{proposta.tema}</span>
+                                <span className='text-sm '>Gênero {proposta.genero.nome} - Nível {nivel[proposta.dificuldade]}</span>
+                                <span>Palavras: {proposta.min_palavras} (min) - {proposta.max_palavras} (máx) </span>
+                                <span> {getHoraFormatada(proposta.data_aplicacao)}- {getHoraFormatada(proposta.data_entrega)} </span>
                             </div>
                         </div>
                     </Grid>
@@ -54,7 +60,7 @@ function ListaRedacoes() {
     return (
         <div className="container">
             <div className='list'>
-                <TitleBoxes title="Propostas Criadas" tooltip="Nova proposta" />
+                <TitleBoxes title="Propostas Criadas" add={true} link="/novaproposta" tooltip="Nova proposta" />
                 <div className="boxList">
                     {getPropostasCriadas()}
                 </div>
