@@ -121,8 +121,8 @@ function ListaRedacoes() {
     }, [])
 
     return (
-        <div className="container">
-            <div className='list'>
+        <div className='flex w-full'>
+            <div className='list !m-10 w-full '>
                 <TitleBoxes title="Redações submetidas" />
                 <div className="boxList">
                     {loading ? (

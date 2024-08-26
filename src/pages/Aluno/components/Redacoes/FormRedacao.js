@@ -6,10 +6,13 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import TitleBoxes from '../../../../components/TitleBoxes';
 import WarningIcon from '@mui/icons-material/Warning';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Tiptap from '../../../../utils/TipTap/TipTap';
 import { getUser } from '../../../../utils/user';
 
 function Redacao() {
+    let navigate = useNavigate();
 
     const [numPalavras, setNumPalavras] = useState(0);
     const [loading, setLoading] = useState(false);
@@ -17,7 +20,8 @@ function Redacao() {
     let [searchParams, setSearchParams] = useSearchParams();
     const [redacao, setRedacao] = useState({
         user_id: getUser().user_id,
-        status: 0
+        status: 0,
+        proposta_id: searchParams.get('proposta')
     });
     const [proposta, setProposta] = useState({});
     const query = useLocation().search
@@ -26,17 +30,20 @@ function Redacao() {
         return inputValue.trim().split(/\s+/).length >= proposta.max_palavras
     }
 
-    const handleChangeRedacao = (e) => {
-        const words = e.target.value.trim().split(/\s+/); // Quebra o texto em palavras
-        if (words.length <= proposta.max_palavras) {
-            setInputValue(e.target.value);
-            setNumPalavras(words.length)
-        }
-        setRedacao({
-            ...redacao,
-            [e.target.name]: e.target.value,
+    const handleChangeEditor = (conteudo) => {
+        const paragrafos = document.querySelectorAll('p');
+        let totalPalavras = 0;
+        paragrafos.forEach(paragrafo => {
+            const texto = paragrafo.innerText.trim();
+            const palavras = texto.split(/\s+/).filter(palavra => palavra.length > 0);
+            totalPalavras += palavras.length;
         });
-    };
+
+        if (totalPalavras <= proposta.max_palavras && totalPalavras >= proposta.min_palavras) {
+            setInputValue(conteudo);
+            setNumPalavras(totalPalavras)
+        }
+    }
 
     const handleChange = (e) => {
         setRedacao({
@@ -57,7 +64,7 @@ function Redacao() {
         e.preventDefault();
         axios.post(`http://localhost:8000/redacoes`, redacaoComData)
             .then(() => {
-                alert('Adicionado!');
+                navigate('/')
             })
             .catch(err => {
                 console.error(err);
@@ -69,10 +76,6 @@ function Redacao() {
     };
 
     const fetchProposta = (id) => {
-        setRedacao({
-            ...redacao,
-            proposta_id: id,
-        });
         axios.get(`http://localhost:8000/propostas/${id}`)
             .then(response => {
                 setProposta(response.data)
@@ -83,6 +86,13 @@ function Redacao() {
         fetchProposta(searchParams.get('proposta'));
     }, [])
 
+    useEffect(() => {
+        setRedacao({
+            ...redacao,
+            texto: inputValue,
+        });
+        console.log(redacao);
+    }, [inputValue]);
 
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -103,22 +113,7 @@ function Redacao() {
                             style={{ marginBottom: 20 }}
                         />
 
-                        <TextField
-                            label="Redação"
-                            fullWidth
-                            margin="normal"
-                            multiline
-                            id="outlined-multiline-static"
-                            size='small'
-                            name="texto"
-                            required
-                            error={checkPalavras()}
-                            value={inputValue}
-                            onChange={handleChangeRedacao}
-
-                            minRows={12}
-                        />
-
+                        <Tiptap handleChangeEditor={(content) => handleChangeEditor(content)} />
                         <div style={{ display: 'flex', color: 'grey', fontSize: 10, gap: 5 }}>
                             {(checkPalavras()) &&
                                 (

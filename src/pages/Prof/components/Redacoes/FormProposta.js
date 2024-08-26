@@ -9,8 +9,10 @@ import TitleBoxes from '../../../../components/TitleBoxes';
 import dayjs from 'dayjs';
 import axios from 'axios';
 import { getUser } from '../../../../utils/user';
+import { useNavigate } from 'react-router-dom';
 
 function Proposta() {
+    let navigate = useNavigate();
 
     const [proposta, setProposta] = useState({
         tema: '',
@@ -63,7 +65,7 @@ function Proposta() {
         delete proposta.turma_id
         axios.post(`http://localhost:8000/propostas?turma_id=${turma_id}`, proposta)
             .then(() => {
-                alert('Adicionado!');
+                navigate('/')
             })
             .catch(err => {
                 console.error(err);

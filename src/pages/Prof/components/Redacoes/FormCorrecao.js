@@ -5,8 +5,11 @@ import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { Link, useSearchParams } from 'react-router-dom';
 import TitleBoxes from '../../../../components/TitleBoxes';
+import { useNavigate } from 'react-router-dom';
+import TipTapVisualizer from '../../../../utils/TipTap/TipTapVisualizer';
 
 function FormCorrecao() {
+    let navigate = useNavigate();
 
     let [searchParams, setSearchParams] = useSearchParams();
     const [redacao, setRedacao] = useState()
@@ -15,15 +18,16 @@ function FormCorrecao() {
     const getRedacao = () => {
         if (redacao) {
             return (
-                <>
-                    <div className='boxCorrecao' style={{ alignItems: "start" }}>
-                        <h1>{redacao.titulo}</h1>
-                        <span>{redacao.texto}</span>
-                        <span>{redacao.proposta.genero.nome}</span>
-                        <span>{redacao.proposta.tema}</span>
+                <div className='m-10'>
+                    <div className='shadow-md border w-full col-span-2 overflow-auto'>
+                        <div className='flex text-left flex-col p-4'>
+                            <h2 className='font-semibold text-lg mb-3'>{redacao.titulo}</h2>
+                            {/* <span className='font-light'>{redacao.texto}</span> */}
+                            <TipTapVisualizer content={redacao.texto} handleChangeEditor={() => { }} />
 
+                        </div>
                     </div>
-                </>
+                </div>
 
             )
         }
@@ -40,7 +44,7 @@ function FormCorrecao() {
         e.preventDefault();
         axios.post(`http://localhost:8000/correcoes`, correcao)
             .then(() => {
-                alert('Adicionado!');
+                navigate('/')
             })
             .catch(err => {
                 console.error(err);
@@ -63,7 +67,6 @@ function FormCorrecao() {
                 [name]: value,
             }));
         }
-        console.log('correcao', correcao);
     };
 
     const getForm = () => {
@@ -143,6 +146,7 @@ function FormCorrecao() {
                 {getRedacao()}
             </div>
             <div>
+                <h1 className='text-xl'>Correção</h1>
                 {getForm()}
 
             </div>

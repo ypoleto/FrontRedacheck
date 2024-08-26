@@ -57,7 +57,7 @@ function NavBar() {
           onClose={handleClose}
           onMouseLeave={handleClose}
         >
-          <MenuItem onClick={handleClose}> <PersonIcon style={{ paddingRight: 10 }} fontSize='small' /> <Link to="/">Minha conta</Link></MenuItem>
+          {/* <MenuItem onClick={handleClose}> <PersonIcon style={{ paddingRight: 10 }} fontSize='small' /> <Link to="/">Minha conta</Link></MenuItem> */}
           <MenuItem onClick={handleLogout}> <LogoutIcon style={{ paddingRight: 10 }} fontSize='small' /> Sair</MenuItem>
         </Menu>
       </div>

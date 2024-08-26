@@ -1,0 +1,29 @@
+
+.editor-menu {
+    margin-bottom: 10px;
+  }
+  
+  .editor-menu button {
+    margin-right: 5px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid grey;
+  }
+  
+  .editor-menu .is-active {
+    background-color: #ddd;
+  }
+  
+  .ProseMirror {
+    border: none;
+    min-height: auto ;
+    text-align: left;
+  }
+  
+  .tiptap p.is-editor-empty:first-child::before {
+    color: rgb(158, 145, 145);
+    content: attr(data-placeholder);
+    float: left;
+    height: 0;
+    pointer-events: none;
+  }
