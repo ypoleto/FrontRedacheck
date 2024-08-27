@@ -47,8 +47,6 @@ function ListaRedacoes() {
             )
         }
         else {
-            console.log('redacao', redacao);
-            console.log('correcao', correcao);
             return (
                 <>
                     Nada

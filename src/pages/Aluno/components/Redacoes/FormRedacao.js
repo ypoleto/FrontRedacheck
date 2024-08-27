@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Tiptap from '../../../../utils/TipTap/TipTap';
 import { getUser } from '../../../../utils/user';
+import '../../../../utils/TipTap/style.css'
 
 function Redacao() {
     let navigate = useNavigate();
@@ -17,7 +18,7 @@ function Redacao() {
     const [numPalavras, setNumPalavras] = useState(0);
     const [loading, setLoading] = useState(false);
     const [inputValue, setInputValue] = useState('');
-    let [searchParams, setSearchParams] = useSearchParams();
+    let [searchParams] = useSearchParams();
     const [redacao, setRedacao] = useState({
         user_id: getUser().user_id,
         status: 0,
@@ -60,7 +61,7 @@ function Redacao() {
             ...redacao,
             data_envio: agora,
         };
-
+        console.log(redacaoComData);
         e.preventDefault();
         axios.post(`http://localhost:8000/redacoes`, redacaoComData)
             .then(() => {
@@ -112,8 +113,8 @@ function Redacao() {
                             onChange={handleChange}
                             style={{ marginBottom: 20 }}
                         />
-
-                        <Tiptap handleChangeEditor={(content) => handleChangeEditor(content)} />
+                        {console.log(redacao.max_palavras)}
+                        <Tiptap setNumPalavras={setNumPalavras} limit={redacao.max_palavras} handleChangeEditor={(content) => handleChangeEditor(content)} />
                         <div style={{ display: 'flex', color: 'grey', fontSize: 10, gap: 5 }}>
                             {(checkPalavras()) &&
                                 (

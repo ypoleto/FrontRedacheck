@@ -1,29 +1,44 @@
-
 .editor-menu {
-    margin-bottom: 10px;
-  }
-  
-  .editor-menu button {
-    margin-right: 5px;
-    padding: 5px 10px;
-    border-radius: 5px;
-    border: 1px solid grey;
-  }
-  
-  .editor-menu .is-active {
-    background-color: #ddd;
-  }
-  
-  .ProseMirror {
-    border: none;
-    min-height: auto ;
-    text-align: left;
-  }
-  
-  .tiptap p.is-editor-empty:first-child::before {
-    color: rgb(158, 145, 145);
-    content: attr(data-placeholder);
-    float: left;
-    height: 0;
-    pointer-events: none;
-  }
+  margin-bottom: 10px;
+}
+
+.editor-menu button {
+  margin-right: 5px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid grey;
+}
+
+.editor-menu .is-active {
+  background-color: #ddd;
+}
+
+.ProseMirror {
+  border: none;
+  min-height: auto;
+  text-align: left;
+}
+
+.tiptap p.is-editor-empty:first-child::before {
+  color: rgb(158, 145, 145);
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+p {
+  margin: 0;
+  padding: 2px;
+}
+
+p:hover {
+  text-decoration: underline dashed orange;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.highlighted {
+  text-decoration: underline dashed orange;
+  text-underline-offset: 3px;
+}

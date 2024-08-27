@@ -4,13 +4,23 @@ import { StarterKit } from '@tiptap/starter-kit';
 import Placeholder from '@tiptap/extension-placeholder';
 import { Bold } from '@tiptap/extension-bold';
 import { Italic } from '@tiptap/extension-italic';
+import UniqueID from '@tiptap-pro/extension-unique-id';
 import './style.css';
+import CharacterCount from '@tiptap/extension-character-count';
 import FormatBoldIcon from '@mui/icons-material/FormatBold';
 import FormatItalicIcon from '@mui/icons-material/FormatItalic';
 
 const TipTapEditor = (props) => {
+  const limit = props.limit
   const editor = useEditor({
     extensions: [
+      UniqueID.configure({
+        types: ['paragraph'],
+      }),
+      CharacterCount.configure({
+        limit,
+        mode: 'nodeSize',
+      }),
       Placeholder.configure({
         placeholder: 'Sua redação vai aqui',
       }),
@@ -25,9 +35,18 @@ const TipTapEditor = (props) => {
     content: props.content || '',
   });
 
+  useEffect(() => {
+    props.setNumPalavras(editor.storage.characterCount.characters())
+  console.log('limit', props);
+  }, [editor])
+
+
+
+
   if (!editor) {
     return null;
   }
+
 
 
   return (
@@ -37,13 +56,13 @@ const TipTapEditor = (props) => {
           onClick={() => editor.chain().focus().toggleBold().run()}
           className={editor.isActive('bold') ? 'is-active' : ''}
         >
-          <FormatBoldIcon/>
+          <FormatBoldIcon />
         </button>
         <button
           onClick={() => editor.chain().focus().toggleItalic().run()}
           className={editor.isActive('italic') ? 'is-active' : ''}
         >
-          <FormatItalicIcon/>
+          <FormatItalicIcon />
         </button>
       </div>
       <EditorContent editor={editor} onChange={props.handleChangeEditor(editor.getHTML())} />
