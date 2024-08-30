@@ -1,4 +1,4 @@
-import { Button, Divider, TextField, Backdrop, CircularProgress, Alert } from '@mui/material';
+import { Button, Divider, TextField, Alert } from '@mui/material';
 import '../../css/Login.css';
 import { useEffect, useState } from 'react';
 import { isAuthenticated, loginUser } from "../../services/auth";
@@ -10,7 +10,6 @@ function LoginPage() {
   const [login, setLogin] = useState({})
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
-  const [users, setUsers] = useState()
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -58,7 +57,7 @@ function LoginPage() {
           </div>
           <div className='cardRightLogin'>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <img src={require('../../images/logo.png')} style={{ width: '10%' }} />
+              <img alt='logo' src={require('../../images/logo.png')} style={{ width: '10%' }} />
               <h1>Bem vindo de volta!</h1>
               <span style={{ color: 'gray' }}>Faça login para continuar</span>
             </div>

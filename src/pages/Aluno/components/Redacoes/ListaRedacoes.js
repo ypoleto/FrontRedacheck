@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 import '../../../../css/Inicio.css';
-import { Backdrop, CircularProgress, Grid, Icon } from '@mui/material';
+import { CircularProgress, Grid } from '@mui/material';
 import Button from '@mui/material/Button';
 import TitleBoxes from '../../../../components/TitleBoxes';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
-import dayjs from 'dayjs';
 import { DateRangeIcon } from '@mui/x-date-pickers';
 import { getUser } from '../../../../utils/user';
 import { getHoraFormatada } from '../../../../utils/formatters';
@@ -17,32 +16,16 @@ function ListaRedacoes() {
     let navigate = useNavigate();
 
 
-    const getPalavras = (texto) => {
-        const words = texto.trim().split(/\s+/); // Quebra o texto em palavras
-        return words.length
-    }
+    // const getPalavras = (texto) => {
+    //     const words = texto.trim().split(/\s+/); // Quebra o texto em palavras
+    //     return words.length
+    // }
 
     const getVisualizarCorrecao = (redacao_id) => {
         navigate({
             pathname: '/correcao',
             search: `?redacao_id=${redacao_id}`
         })
-    }
-
-    const getDificuldade = (id) => {
-        const dificuldadeConfig = {
-            'facil': { backgroundColor: '#59c948', texto: 'Fácil' },
-            'medio': { backgroundColor: '#f2e07d', texto: 'Médio' },
-            default: { backgroundColor: '#d83636', texto: 'Difícil' }
-        };
-
-        const { backgroundColor, texto } = dificuldadeConfig[id] || dificuldadeConfig.default;
-
-        return (
-            <span style={{ backgroundColor, padding: '3px 10px', borderRadius: 5, fontSize: 13, color: 'white' }}>
-                {texto}
-            </span>
-        );
     }
 
     const fetchRedacoesFeitas = async () => {
@@ -61,7 +44,7 @@ function ListaRedacoes() {
     }
 
     const getCorrigido = (status) => {
-        if (status == 1) {
+        if (status === 1) {
             return (
                 <div style={{ backgroundColor: '#62C948' }} className='rounded-t-md p-1 text-white'>
                     <span>Corrigido</span>
@@ -77,7 +60,7 @@ function ListaRedacoes() {
     }
 
     const getPropostas = () => {
-        if (propostas.length == 0) {
+        if (propostas.length === 0) {
             return (
                 <div style={{ color: "#9b9b9b", fontSize: '14px', margin: 20 }}>
                     <span>Nenhuma redação.</span>
@@ -103,7 +86,7 @@ function ListaRedacoes() {
                                 </div>
                             </div>
                             <div>
-                                {redacao.status == 1 && (
+                                {redacao.status === 1 && (
                                     <div>
                                         <Button variant='outlined' fullWidth onClick={() => getVisualizarCorrecao(redacao.id)}>Ver correção</Button>
                                     </div>

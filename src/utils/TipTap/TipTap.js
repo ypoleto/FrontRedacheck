@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react';
 import { StarterKit } from '@tiptap/starter-kit';
 import Placeholder from '@tiptap/extension-placeholder';
@@ -11,15 +11,11 @@ import FormatBoldIcon from '@mui/icons-material/FormatBold';
 import FormatItalicIcon from '@mui/icons-material/FormatItalic';
 
 const TipTapEditor = (props) => {
-  const limit = props.limit
+  const [limit, setLimit] = useState()
   const editor = useEditor({
     extensions: [
       UniqueID.configure({
         types: ['paragraph'],
-      }),
-      CharacterCount.configure({
-        limit,
-        mode: 'nodeSize',
       }),
       Placeholder.configure({
         placeholder: 'Sua redação vai aqui',
@@ -36,11 +32,8 @@ const TipTapEditor = (props) => {
   });
 
   useEffect(() => {
-    props.setNumPalavras(editor.storage.characterCount.characters())
-  console.log('limit', props);
-  }, [editor])
-
-
+    setLimit(props.limit)
+  }, [props])
 
 
   if (!editor) {

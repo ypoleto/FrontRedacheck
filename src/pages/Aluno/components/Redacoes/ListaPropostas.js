@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import '../../../../css/Inicio.css';
-import { Backdrop, CircularProgress, Grid } from '@mui/material';
+import { CircularProgress, Grid } from '@mui/material';
 import Button from '@mui/material/Button';
 import TitleBoxes from '../../../../components/TitleBoxes';
 import { useNavigate } from "react-router-dom";
@@ -13,7 +13,6 @@ function ListaRedacoes() {
 
     const [propostas, setPropostas] = useState([]);
     const [loading, setLoading] = useState([]);
-    const [user, setUser] = useState();
     let navigate = useNavigate();
 
 
@@ -56,7 +55,7 @@ function ListaRedacoes() {
     }
 
     const getPropostas = () => {
-        if (propostas.length == 0) {
+        if (propostas.length === 0) {
             return (
                 <div style={{ color: "#9b9b9b", fontSize: '14px', margin: 20 }}>
                     <span>Nenhuma proposta cadastrada.</span>

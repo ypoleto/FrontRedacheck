@@ -1,7 +1,7 @@
-import { Button, Checkbox, Divider, FormControl, InputLabel, ListItemText, MenuItem, OutlinedInput, Select, TextField } from '@mui/material';
+import { Button, Divider, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import '../../css/Login.css';
 import { useEffect, useState } from 'react';
-import { isAuthenticated, loginUser } from "../../services/auth";
+import { isAuthenticated } from "../../services/auth";
 import { useNavigate } from 'react-router-dom';
 import api from '../../services/api';
 import { isValidEmail } from '../../utils/validators'
@@ -12,11 +12,7 @@ function LoginPage() {
     const [turmas, setTurmas] = useState()
     const [errorUser, setErrorUser] = useState(false)
     const [errorEmail, setErrorEmail] = useState(false)
-    const [estados, setEstados] = useState([])
-    const [cidades, setCidades] = useState([false])
     const [errorTurma, setErrorTurma] = useState(false)
-    const [cidadesSelecionadas, setCidadesSelecionadas] = useState([])
-    const [method, setMethod] = useState('login')
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -62,7 +58,7 @@ function LoginPage() {
             ...login,
             [e.target.name]: e.target.value,
         });
-        if (!turmas.find(turma => turma.turma_id == e.target.value)) {
+        if (!turmas.find(turma => turma.turma_id === e.target.value)) {
             setErrorTurma(true)
         }
         else {
@@ -100,25 +96,11 @@ function LoginPage() {
                 setTurmas(response.data)
             })
     };
-    const getEstados = () => {
-        api.get('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
-            .then(response => {
-                setEstados(response.data)
-            })
-
-    };
-    const getCidades = (id) => {
-        api.get(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${id}/municipios`)
-            .then(response => {
-                setCidades(response.data)
-            })
-    };
 
 
     useEffect(() => {
         getAllUsers()
         getAllTurmas()
-        getEstados()
     }, [])
 
     return (

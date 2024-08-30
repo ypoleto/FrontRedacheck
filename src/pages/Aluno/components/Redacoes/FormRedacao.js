@@ -1,9 +1,9 @@
-import { Backdrop, Button, CircularProgress, TextField } from '@mui/material';
+import { Button, TextField } from '@mui/material';
 import '../../../../css/Cadastros.css';
 import { useEffect, useState } from 'react';
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { Link, useLocation, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import TitleBoxes from '../../../../components/TitleBoxes';
 import WarningIcon from '@mui/icons-material/Warning';
 import { useNavigate } from 'react-router-dom';
@@ -25,10 +25,9 @@ function Redacao() {
         proposta_id: searchParams.get('proposta')
     });
     const [proposta, setProposta] = useState({});
-    const query = useLocation().search
 
     const checkPalavras = () => {
-        return inputValue.trim().split(/\s+/).length >= proposta.max_palavras
+        return inputValue.trim().split(/\s+/).length < proposta.min_palavras
     }
 
     const handleChangeEditor = (conteudo) => {
@@ -39,11 +38,8 @@ function Redacao() {
             const palavras = texto.split(/\s+/).filter(palavra => palavra.length > 0);
             totalPalavras += palavras.length;
         });
-
-        if (totalPalavras <= proposta.max_palavras && totalPalavras >= proposta.min_palavras) {
-            setInputValue(conteudo);
-            setNumPalavras(totalPalavras)
-        }
+        setNumPalavras(totalPalavras)
+        setInputValue(conteudo);
     }
 
     const handleChange = (e) => {
@@ -55,7 +51,7 @@ function Redacao() {
 
     const handleSubmit = (e) => {
         setLoading(true);
-        const agora = new Date().toISOString(); // Use ISO string for consistency
+        const agora = new Date().toISOString(); 
 
         const redacaoComData = {
             ...redacao,
@@ -84,7 +80,9 @@ function Redacao() {
     }
 
     useEffect(() => {
-        fetchProposta(searchParams.get('proposta'));
+        if (!proposta.id) {
+            fetchProposta(searchParams.get('proposta'));
+        }
     }, [])
 
     useEffect(() => {
@@ -92,7 +90,7 @@ function Redacao() {
             ...redacao,
             texto: inputValue,
         });
-        console.log(redacao);
+        console.log('redacao');
     }, [inputValue]);
 
     return (
@@ -113,15 +111,14 @@ function Redacao() {
                             onChange={handleChange}
                             style={{ marginBottom: 20 }}
                         />
-                        {console.log(redacao.max_palavras)}
-                        <Tiptap setNumPalavras={setNumPalavras} limit={redacao.max_palavras} handleChangeEditor={(content) => handleChangeEditor(content)} />
-                        <div style={{ display: 'flex', color: 'grey', fontSize: 10, gap: 5 }}>
+                        <Tiptap handleChangeEditor={handleChangeEditor} />
+                        <div style={{ display: 'flex', color: 'grey', fontSize: 10, gap: 5, marginTop: 5 }}>
                             {(checkPalavras()) &&
                                 (
                                     <WarningIcon style={{ color: checkPalavras() ? 'red' : 'grey', fontSize: 12 }} />
                                 )
                             }
-                            <span style={{ color: checkPalavras() ? 'red' : 'grey' }}>Palavras: {numPalavras}/{proposta.max_palavras}</span>
+                            <span style={{ color: checkPalavras() ? 'red' : 'grey' }}>Palavras: {numPalavras}</span>
                         </div>
                         <div style={{ display: 'flex', gap: 20, marginTop: 30, justifyContent: 'center' }}>
                             <Button type='submit' color='success' variant='contained'>

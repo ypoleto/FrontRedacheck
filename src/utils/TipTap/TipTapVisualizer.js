@@ -10,7 +10,7 @@ const TipTapVisualizer = ({ content, highlightedId, handleCommentClick }) => {
     };
 
     return (
-        <div className='text-sm' onClick={handleCommentClick}
+        <div onClick={handleCommentClick}
             dangerouslySetInnerHTML={{ __html: applyHighlight(content) }}
         />
     );

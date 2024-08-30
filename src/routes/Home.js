@@ -13,7 +13,7 @@ const Home = () => {
     }
     else {
         {
-            if (user.tipo == 'aluno') {
+            if (user.tipo === 'aluno') {
                 return (
                     <InicioAluno />
                 )

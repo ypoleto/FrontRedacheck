@@ -1,8 +1,5 @@
 import { Avatar, IconButton, Menu, MenuItem } from '@mui/material';
-import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
-import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import '../css/NavBar.css';
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -36,7 +33,7 @@ function NavBar() {
   return (
     < div className="nav" >
       <div style={{ display: 'grid', gridAutoFlow: 'column', gap: 50, alignItems: 'center' }}>
-        <Link to="/"><img className='imgLogo' src={require('../images/logo.png')}></img></Link>
+        <Link to="/"><img className='imgLogo' alt='logo' src={require('../images/logo.png')}></img></Link>
         <Link to="/">Início</Link>
         <Link to="/sobre">Sobre</Link>
       </div>

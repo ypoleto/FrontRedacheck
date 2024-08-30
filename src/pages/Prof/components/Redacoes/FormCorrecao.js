@@ -42,7 +42,8 @@ function FormCorrecao() {
     };
 
     const handleSubmit = (e) => {
-        e.preventDefault();
+        // e.preventDefault();
+        console.log('correcao', correcao);
         axios.post(`http://localhost:8000/correcoes`, correcao)
             .then(() => {
                 navigate('/');
@@ -90,12 +91,11 @@ function FormCorrecao() {
     }
 
     const handleSubmitComentario = () => {
-        console.log(openDialog);
         setComentarios([...comentarios, {
-            comentario_id: Date.now(),
             paragrafo_id: openDialog.comment.paragrafo_id,
             comentario: comentario
         }]);
+        
         setOpenDialog({ status: false })
     }
 
@@ -156,6 +156,13 @@ function FormCorrecao() {
         console.log('openDialog', openDialog);
     }, [openDialog]);
 
+    useEffect(() => {
+        setCorrecao((prevCorrecao) => ({
+            ...prevCorrecao,
+            comentarios: comentarios,
+        }));
+    }, [comentarios])
+    
 
 
     return (
@@ -185,6 +192,17 @@ function FormCorrecao() {
                             onInput={handleChange}
                             style={{ marginBottom: 20 }}
                         />
+                    </div>
+                    <div className='mt-5'>
+                        <Button
+                            
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            onClick={() => handleSubmit()}
+                        >
+                            Enviar
+                        </Button>
                     </div>
                 </div>
             </div>

@@ -77,11 +77,8 @@ function Turma(props) {
         else {
             setTurmaAtual({});
         }
-    }, [])
+    })
 
-    useEffect(() => {
-        console.log('aaa', turmaAtual);
-    }, [turmaAtual])
 
 
     return (
@@ -122,7 +119,7 @@ function Turma(props) {
                         }}
                         required
                     />
-                    {turmaAtual.turma_ativa == 1 && (
+                    {turmaAtual.turma_ativa === 1 && (
                         <Button onClick={() => handleDeactivate()} fullWidth type="submit" variant="outlined" color="warning">
                             Desativar turma
                         </Button>

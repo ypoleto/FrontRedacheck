@@ -1,7 +1,7 @@
 import './css/App.css';
 import NavBar from './pages/NavBar';
 import { Outlet } from 'react-router-dom';
-import { fetchUser, isAuthenticated } from './services/auth'
+import { isAuthenticated } from './services/auth'
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 
@@ -12,10 +12,7 @@ function App() {
     if (!isAuthenticated()) {
       navigate('/login')
     }
-    else {
-      navigate('/')
-    }
-  }, [])
+  })
 
   
   return (

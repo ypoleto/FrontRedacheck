@@ -67,7 +67,7 @@ function ListaTurmas() {
                 {
                     turmas.map((turma) => (
                         <div key={turma.turma_id}>
-                            {turma.turma_ativa == 1 ? (
+                            {turma.turma_ativa === 1 ? (
                                 <>
                                     <div className='boxTurma'>
                                         <div>

@@ -17,7 +17,7 @@ function ListaRedacoes() {
     }
 
     const getPropostasCriadas = () => {
-        if (redacoes.length == 0) {
+        if (redacoes.length === 0) {
             return (
                 <div style={{ color: "#9b9b9b", fontSize: '14px', margin: 20 }}>
                     <span>Nenhuma redação pendente de correção.</span>
