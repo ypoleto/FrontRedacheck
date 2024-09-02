@@ -1,16 +1,15 @@
 import { useEffect, useState } from 'react';
 import '../../../../css/Inicio.css';
-import Turma from './FormTurma';
-import { Backdrop, Button, CircularProgress, Divider } from '@mui/material';
-import Dialog from '@mui/material/Dialog';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
+import { Backdrop, Button, CircularProgress } from '@mui/material';
 import TitleBoxes from '../../../../components/TitleBoxes';
 import { getUser } from '../../../../utils/user';
+import { useNavigate } from 'react-router-dom';
+import AdjustIcon from '@mui/icons-material/Adjust';
 import axios from 'axios';
 
 function ListaTurmas() {
 
+    let navigate = useNavigate();
     const [dialogNovaTurma, setDialogNovaTurma] = useState(false);
     const [turma, setTurma] = useState({});
     const [method, setMethod] = useState('POST');
@@ -20,24 +19,14 @@ function ListaTurmas() {
 
     const handleEdit = (t) => {
         setTurma(t);
-        setDialogNovaTurma(true);
-        setMethod('PUT');
-    }
+        navigate({
+            pathname: '/turmas',
+            search: `?turma=${t.turma_id}`
 
-    const handleActive = (t) => {
-        console.log(t);
-        let turmaInativa = t;
-        turmaInativa.turma_ativa = 1;
-        axios.put(`http://localhost:8000/turmas/${t.turma_id}`, turmaInativa)
-            .then(() => {
-                window.location.reload()
-            })
-            .catch(err => {
-                console.error(err);
-            })
-            .finally(() => {
-                setLoading(false);
-            });
+        }, { state: t })
+
+        // setDialogNovaTurma(true);
+        // setMethod('PUT');
     }
 
     const fetchTurmas = () => {
@@ -67,39 +56,15 @@ function ListaTurmas() {
                 {
                     turmas.map((turma) => (
                         <div key={turma.turma_id}>
-                            {turma.turma_ativa === 1 ? (
-                                <>
-                                    <div className='boxTurma'>
-                                        <div>
-                                            <div>
-                                                <span style={{ fontSize: 16, fontWeight: 'bold', textTransform: 'uppercase' }}>
-                                                    {turma.nome}
-                                                </span>
-                                                <span style={{ margin: '0px 5px' }}>
-                                                    -
-                                                </span>
-                                                <span style={{ fontSize: 14 }}>
-                                                    {turma.colegio}
-                                                </span>
-                                            </div>
-                                            <div className='codigoTurma'>
-                                                <span>
-                                                    Código da turma: {turma.turma_id}
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div style={{ display: 'flex', justifyContent: 'end', alignItems: 'center' }}>
-                                            <Button fullWidth variant='outlined' onClick={() => handleEdit(turma)}>
-                                                Editar
-                                            </Button>
-                                        </div>
-                                    </div>
-                                </>
-                            ) : (
+                            <>
                                 <div className='boxTurma'>
                                     <div>
                                         <div>
-                                            <span style={{ fontSize: 16, fontWeight: 'bold', textTransform: 'uppercase' }}>
+                                            {turma.turma_ativa == 1 ?
+                                                (<AdjustIcon className='text-green-700' />) :
+                                                (<AdjustIcon className='text-red-700' />)
+                                            }
+                                            <span className='uppercase font-bold p-1'>
                                                 {turma.nome}
                                             </span>
                                             <span style={{ margin: '0px 5px' }}>
@@ -116,12 +81,12 @@ function ListaTurmas() {
                                         </div>
                                     </div>
                                     <div style={{ display: 'flex', justifyContent: 'end', alignItems: 'center' }}>
-                                        <Button fullWidth variant='outlined' color='error' onClick={() => handleActive(turma)}>
-                                            Ativar
+                                        <Button fullWidth variant='outlined' onClick={() => handleEdit(turma)}>
+                                            Editar
                                         </Button>
                                     </div>
                                 </div>
-                            )}
+                            </>
                         </div>
                     ))
                 }
@@ -145,34 +110,16 @@ function ListaTurmas() {
             </Backdrop>
             <div className="container">
                 <div className='list'>
-                    <TitleBoxes add={true} title="Minhas turmas" tooltip="Nova turma" func={() => { setDialogNovaTurma(true); setMethod("POST") }} />
+                    <TitleBoxes add={true} title="Minhas turmas" tooltip="Nova turma" func={() => {
+                        navigate({
+                            pathname: '/turmas',
+                        })
+                    }} />
                     <div className="boxList">
                         {getTurmas()}
                     </div>
                 </div>
             </div>
-            <Dialog
-                open={dialogNovaTurma}
-                onClose={handleClose}
-                sx={{
-                    "& .MuiDialog-container": {
-                        "& .MuiPaper-root": {
-                            width: "100%",
-                            height: "100%",
-                            maxWidth: "700px",
-                            maxHeight: "400px",
-                        },
-                    },
-                }}
-            >
-                <DialogTitle>
-                    <TitleBoxes title={method === "POST" ? "Nova turma" : "Editar turma"} />
-                </DialogTitle>
-                <Divider></Divider>
-                <DialogContent>
-                    <Turma setCidades={setCidades} cidades={cidades} turma={turma} setTurma={setTurma} turmas={turmas} method={method} setTurmas={setTurmas} setDialogNovaTurma={setDialogNovaTurma} />
-                </DialogContent>
-            </Dialog>
         </>
     );
 }

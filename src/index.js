@@ -10,6 +10,7 @@ import NovaRedacao from './routes/NovaRedacao';
 import NovaCorrecao from './routes/correcao/NovaCorrecao';
 import ListarCorrecao from './routes/correcao/ListarCorrecao';
 import Sobre from './routes/Sobre';
+import Turmas from './routes/Turmas';
 import ErrorPage from './pages/ErrorPage/ErrorPage';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Signup from './routes/Signup';
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
       {
         path: "/correcao",
         element: <ListarCorrecao />,
+      },
+      {
+        path: "/turmas",
+        element: <Turmas />,
       },
 
     ]

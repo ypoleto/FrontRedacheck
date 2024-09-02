@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 const TitleBoxes = (props) => {
     return (
         <div className='tituloBox'>
-            <span>
+            <span className='text-2xl'>
                 {props.title}
             </span>
             {props.add ? (

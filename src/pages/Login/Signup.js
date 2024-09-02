@@ -170,19 +170,6 @@ function LoginPage() {
                                         </MenuItem>
                                     </Select>
                                 </FormControl>
-                                {login.tipo === 'aluno' && (
-                                    <TextField
-                                        required
-                                        label="Código da turma"
-                                        fullWidth
-                                        margin="normal"
-                                        name="turma"
-                                        value={login.turmas}
-                                        onChange={handleChangeTurma}
-                                        error={errorTurma}
-                                        helperText={errorTurma ? 'Turma não encontrada' : ''}
-                                    />
-                                )}
                             </div>
 
                             <Button type='submit' fullWidth size='large' variant='contained'>

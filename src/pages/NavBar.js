@@ -4,12 +4,13 @@ import '../css/NavBar.css';
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { getUser } from '../utils/user';
+import SettingsIcon from '@mui/icons-material/Settings';
 
 function NavBar() {
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [usuario, setUsuario] = useState({ nome: "" });
-  
+
   const navigate = useNavigate();
 
   const handleIconClick = (event) => {
@@ -24,6 +25,10 @@ function NavBar() {
     handleClose();
     localStorage.removeItem('token')
     navigate('/login')
+  }
+  const handleSettings = () => {
+    handleClose();
+    navigate('/settings')
   }
 
   useEffect(() => {
@@ -55,7 +60,8 @@ function NavBar() {
           onMouseLeave={handleClose}
         >
           {/* <MenuItem onClick={handleClose}> <PersonIcon style={{ paddingRight: 10 }} fontSize='small' /> <Link to="/">Minha conta</Link></MenuItem> */}
-          <MenuItem onClick={handleLogout}> <LogoutIcon style={{ paddingRight: 10 }} fontSize='small' /> Sair</MenuItem>
+          <MenuItem onClick={handleLogout}> <LogoutIcon style={{ paddingRight: 10 }} fontSize='medium' /> Sair</MenuItem>
+          {/* <MenuItem onClick={handleSettings}> <SettingsIcon style={{ paddingRight: 10 }} fontSize='medium' /> Gerenciar</MenuItem> */}
         </Menu>
       </div>
     </div >
