@@ -100,7 +100,7 @@ function ListaRedacoes() {
                 <div className='m-10 grid grid-cols-3 gap-10'>
                     <div className='shadow-md w-full col-span-2 overflow-auto' style={{ maxHeight: '80vh' }}>
                         <div>
-                            <div className='bg-gray-100 rounded-t-md p-2'>
+                            <div className='bg-blue-600 text-white rounded-t-md p-2'>
                                 <h1>Redação</h1>
                             </div>
                             <div className='flex text-left flex-col p-4'>
@@ -115,14 +115,14 @@ function ListaRedacoes() {
                     <div className='shadow-md w-full col-span-1 overflow-auto' style={{ maxHeight: '40vh' }}>
                         <div className='flex flex-col h-full justify-between'>
                             <div>
-                                <div className='bg-gray-100 rounded-t-md p-2'>
+                                <div className='bg-blue-600 text-white rounded-t-md p-2'>
                                     <h1>Comentários da correção</h1>
                                 </div>
                                 <div>
                                     {getComentariosCorrecao()}
                                 </div>
                             </div>
-                            <div className='bg-gray-100 rounded-b-md p-2 '>
+                            <div className='bg-blue-600 text-white rounded-b-md p-2 '>
                                 <span className='flex text-start'>Nota: {correcao.nota}</span>
                             </div>
                         </div>
