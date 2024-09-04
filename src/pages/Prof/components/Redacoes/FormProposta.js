@@ -51,7 +51,10 @@ function Proposta() {
         setLoading(true);
         axios.get('http://localhost:8000/turmas')
             .then(response => {
-                setTurmas(response.data)
+                let turmasfinal = response.data.filter(t => t.professor == getUser().user_id)
+                console.log(turmasfinal);
+                
+                setTurmas(turmasfinal)
             })
             .finally(() => {
                 setLoading(false);

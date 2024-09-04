@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Tiptap from '../../../../utils/TipTap/TipTap';
 import { getUser } from '../../../../utils/user';
-import '../../../../utils/TipTap/style.css'
+import '../../../../utils/TipTap/css/style.css'
 
 function Redacao() {
     let navigate = useNavigate();

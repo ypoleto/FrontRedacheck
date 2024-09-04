@@ -1,4 +1,4 @@
-/* 
+
 .editor-menu {
   margin-bottom: 10px;
   text-align: start;
@@ -31,7 +31,8 @@
   pointer-events: none;
 }
 
-p:hover {
-  text-decoration: none !important;
-  cursor: default !important;
-} */
+.highlighted {
+  text-decoration: underline dashed orange !important;
+  text-underline-offset: 3px !important;
+  cursor: pointer;
+}

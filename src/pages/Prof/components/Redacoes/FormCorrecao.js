@@ -27,6 +27,7 @@ function FormCorrecao() {
                             <TipTapVisualizer
                                 content={redacao.texto}
                                 highlightedId={highlightedId}
+                                setHighlightedId={setHighlightedId}
                                 handleCommentClick={handleCommentClick}
                             />
                         </div>
@@ -42,7 +43,6 @@ function FormCorrecao() {
     };
 
     const handleSubmit = (e) => {
-        // e.preventDefault();
         console.log('correcao', correcao);
         axios.post(`http://localhost:8000/correcoes`, correcao)
             .then(() => {

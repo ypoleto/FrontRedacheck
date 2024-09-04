@@ -5,8 +5,7 @@ import Placeholder from '@tiptap/extension-placeholder';
 import { Bold } from '@tiptap/extension-bold';
 import { Italic } from '@tiptap/extension-italic';
 import UniqueID from '@tiptap-pro/extension-unique-id';
-import './style.css';
-import CharacterCount from '@tiptap/extension-character-count';
+import styles from './css/style.css';
 import FormatBoldIcon from '@mui/icons-material/FormatBold';
 import FormatItalicIcon from '@mui/icons-material/FormatItalic';
 
@@ -58,7 +57,7 @@ const TipTapEditor = (props) => {
           <FormatItalicIcon />
         </button>
       </div>
-      <EditorContent editor={editor} onChange={props.handleChangeEditor(editor.getHTML())} />
+      <EditorContent className={styles.escritor} editor={editor} onChange={props.handleChangeEditor(editor.getHTML())} />
 
     </div>
   );

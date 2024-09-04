@@ -2,7 +2,6 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Navigation from '../../../components/Navigation'
 import { useSearchParams } from 'react-router-dom';
-import '../../../utils/TipTap/stylevisu.css'
 
 function ListaRedacoes() {
 
@@ -105,7 +104,7 @@ function ListaRedacoes() {
                             </div>
                             <div className='flex text-left flex-col p-4'>
                                 <h2 className='text-xl font-semibold mb-5 text-center'>{redacao.titulo}</h2>
-                                <div
+                                <div 
                                     dangerouslySetInnerHTML={{ __html: applyHighlight(redacao.texto) }}
                                 />
                             </div>
@@ -133,7 +132,7 @@ function ListaRedacoes() {
         else {
             return (
                 <>
-                    Nada
+                    Nada aqui
                 </>
 
             )

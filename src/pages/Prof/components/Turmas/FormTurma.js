@@ -13,7 +13,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 function Turma(props) {
 
     let navigate = useNavigate();
-    const [openConfirm, setOpenConfirm] = useState();
+    const [openConfirm, setOpenConfirm] = useState(false);
     const [alunoBusca, setAlunoBusca] = useState();
     const [busca, setBusca] = useState();
     const [loading, setLoading] = useState(false);
@@ -81,7 +81,12 @@ function Turma(props) {
             });
     }
 
-    const handleDeleteAluno = (thu) => {
+    const handleDeleteAluno = (e) => {
+        e.preventDefault();
+        setOpenConfirm(true)
+    }
+
+    const deleteAluno = (thu) => {
         setLoading(true);
         axios.delete(`http://localhost:8000/turmas_users/${thu.turmas_has_users_id}`)
             .then(response => {
@@ -105,13 +110,16 @@ function Turma(props) {
             })
             .catch(err => {
                 console.error(err);
+                setAlunoBusca();
+
             })
             .finally(() => {
                 setLoading(false);
             });
     }
 
-    const handleTurma = () => {
+    const handleTurma = (e) => {
+        e.preventDefault();
         let turmaAtiva = turmaAtual;
         turmaAtiva.turma_ativa = !parseInt(turmaAtiva.turma_ativa);
         axios.put(`http://localhost:8000/turmas/${turmaAtiva.turma_id}`, turmaAtiva)
@@ -159,7 +167,7 @@ function Turma(props) {
                                         <span className='text-gray-600'>@{aluno.user.nome}</span>
                                     </div>
                                     <div className='self-center'>
-                                        <button onClick={() => { setOpenConfirm(true) }}>
+                                        <button onClick={(e) => { handleDeleteAluno(e) }}>
                                             <CancelIcon className='text-red-500' />
                                         </button>
                                     </div>
@@ -172,7 +180,7 @@ function Turma(props) {
                                     </DialogContent>
                                     <DialogActions>
                                         <Button onClick={() => setOpenConfirm(false)}>Não</Button>
-                                        <Button onClick={() => handleDeleteAluno(aluno)} autoFocus>
+                                        <Button onClick={() => deleteAluno(aluno)} autoFocus>
                                             Sim
                                         </Button>
                                     </DialogActions>
@@ -225,20 +233,20 @@ function Turma(props) {
                 >
                     <CircularProgress color="inherit" />
                 </Backdrop>
-                <div className='flex justify-start mb-5 -mx-3'>
+                {turmaAtual.turma_id && (<div className='flex justify-start mb-5 -mx-3'>
                     <FormControlLabel
                         control={
                             <Switch
                                 size='medium'
                                 checked={parseInt(turmaAtual.turma_ativa)}
-                                onChange={handleTurma}
+                                onChange={() => handleTurma()}
                             />
                         }
 
                         labelPlacement='start'
                         label={turmaAtual.turma_ativa == 1 ? 'Desativar' : 'Ativar'}
                     />
-                </div>
+                </div>)}
                 <form>
                     <TextField
                         label="Nome da turma"
@@ -311,7 +319,7 @@ function Turma(props) {
                                 name="username"
                                 onChange={setBusca}
                             />
-                            <Button onClick={handleBusca}>Buscar</Button>
+                            <Button onClick={() => handleBusca()}>Buscar</Button>
                         </div>
                         {alunoBusca ? (
                             <div className='my-5 gap-5 flex flex-col'>

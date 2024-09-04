@@ -25,6 +25,9 @@
   float: left;
   height: 0;
   pointer-events: none;
+  text-decoration: underline dashed orange;
+  text-underline-offset: 3px;
+  cursor: pointer;
 }
 
 p {
@@ -32,13 +35,4 @@ p {
   padding: 2px;
 }
 
-p:hover {
-  text-decoration: underline dashed orange;
-  text-underline-offset: 3px;
-  cursor: pointer;
-}
 
-.highlighted {
-  text-decoration: underline dashed orange;
-  text-underline-offset: 3px;
-}
